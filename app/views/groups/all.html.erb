@@ -1,7 +1,22 @@
-<h2>View all groups</h2>
+<h2>All groups</h2>
 
-<ul>
+<div>
   <% @groups.each do |group| %>
-    <li><%= group.name %></li>
+    <div class="media">
+    <a class="pull-left" href="#">
+      <img class="media-object" src="<%= group.image_url %>/convert?w=100&h=100&fit=clip">
+    </a>
+    <div class="media-body">
+      <h4 style="display:inline" class="media-heading"><%= group.name %></h4>
+        <a href="#" class="edit" id="edit_group_link" data-id="<%= group.id %>">Join</a></li>
+      <p><%= group.description %></p>
+   
+      <!-- Nested media object -->
+  <!--     <div class="media">
+        
+      </div> -->
+    </div>
+  </div>
   <% end %>
-</ul>
+</div>
+

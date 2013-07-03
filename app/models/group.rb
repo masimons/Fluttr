@@ -14,8 +14,10 @@
 class Group < ActiveRecord::Base
   attr_accessible :name, :description, :creator_id, :image_url
 
-  has_many :memberships
-  has_many :members, :through => :memberships, :source => :user
+  has_many :memberships, :dependent => :destroy
+  has_many :members, :through => :memberships, :source => :user, :dependent => :destroy
+
+  has_many :photos
 
   belongs_to :creator, :class_name => "User", :foreign_key => :creator_id
 end

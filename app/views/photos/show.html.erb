@@ -1,3 +1,36 @@
-<div>
-  <%= image_tag @photo.image.url %>
+<div class="show_photo">
+  <img src="<%= @photo.image_url %>/convert?w=500&h=500&fit=clip">
 </div>
+<br>
+
+<div data-id-photo="<%= @photo.id %>">
+  <textarea class="comment" id="comment_body" placeholder="Write a comment"></textarea>
+</div>
+<br>
+
+<div class="comments">
+</div>
+
+<script type="text/javascript">
+  $('#comment_body').on("keypress", function(event) {
+    if (event.which === 13) {
+      var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
+      var body = $(event.currentTarget).val());
+    $.ajax({
+      url: '/comments',
+    })
+    }
+  })
+</script>
+<!-- 
+ if (event.which === 13) {
+      var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
+      var value = $(event.currentTarget).val();
+      $.ajax({
+        url: '/photos/' + photo_id,
+        type: 'PUT',
+        data: {photo: {name:  value }},
+        success: function(data) {
+          $('#name_label').text("Saved").css("color", "green");
+        }
+      }); -->

@@ -4,28 +4,23 @@ class PhotosController < ApplicationController
   end
 
   def index
-    
   end
 
   def create
     urls = params[:urls]
-    @photos = []
 
-    urls.each do |url|
-      photo = Photo.new(:image_url => url)
-      album = current_user.albums.where(:title => "Other").first
-      # where(user_name: user_name, password: password).first
-      photo.album_id = album.id
-      photo.save!
-      @photos << photo
-    end
     @albums = current_user.albums
-    # render json: @photos.to_json
+    album = @albums.where(:title => "Other").first
+
+    @photos = urls.map do |url|
+      album.photos.create(:image_url => url)
+    end
+  
     render :edit, :layout => false
   end
 
   def show
-    @photo = Photo.find([:id])
+    @photo = Photo.find(params[:id])
   end
 
   def edit

@@ -18,6 +18,8 @@
 #  locked_at              :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  profile_url            :string(255)
+#  cover_url              :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -26,7 +28,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
-  attr_accessible :email, :password, :password_confirmation, :remember_mey
+  attr_accessible :email, :password, :password_confirmation, :remember_me, 
+                  :profile_url, :cover_url
 
   has_many :albums
   has_many :photos, :through => :albums

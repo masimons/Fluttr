@@ -1,47 +1,55 @@
+<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+
 <h2>Create a group:</h2>
+
+<button id="upload_button" class="btn btn-primary">Add Avatar</button>
+<br>
+<div id="avatar_div"></div>
 
 <%= form_for Group.new do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %>
   <br>
+  <br>
 
   <%= f.label :description %>
   <%= f.text_area :description %>
   <br>
+  <br>
+
+  <input id="hidden_url" type="hidden" name="group[image_url]" >
 
   <%= f.submit "Create Group!" %>
 <% end %>
-
-<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
-
-<button id="upload_button" class="btn btn-primary">Upload photos</button>
 
 <script type="text/javascript">
   filepicker.setKey('AhjzhTx37SyaNYS8XvjR9z');
 
   var inkblobToUrl = function(InkBlobs) {
-    var urls = []
+    return InkBlobs[0].url;
 
-    for (var i=0; i<InkBlobs.length; i++) {
-      urls.push(InkBlobs[i].url)
-    }
-
-    return urls;
   }
 
   $("#upload_button").on("click", function() {
-    filepicker.pickAndStore({multiple: true, mimetype:"image/*"},
+    filepicker.pickAndStore({multiple: false, mimetype:"image/*"},
     {location:"S3"}, function(InkBlobs){
-      var urls = inkblobToUrl(InkBlobs);
 
-      $.ajax({
-        type: "POST",
-        url: "/photos",
-        data: { urls: urls },
-        success: function(data) {
-          console.log("hello");
-        }
-      });
+      var url = inkblobToUrl(InkBlobs);
+      console.log(url);
+      var img = "<img src='" + url + "/convert?w=150&h=150&fit=clip'></img>"
+      $('#avatar_div').html(img);
+      $('#hidden_url').attr('value', url);
+
+      // $.ajax({
+      //   type: "POST",
+      //   url: "/groups",
+      //   data: { url: url },
+      //   success: function(data) {
+      //     console.log(data.image_url);
+      //     var img = "<img src='" + data.image_url + "/convert?w=150&h=150&fit=clip'></img>"
+      //     $('#avatar_div').html(img);
+      //   }
+      // });
 
     });
   });

@@ -1,8 +1,8 @@
-<div class="row">
+<div class="row-fluid">
   <% @photos.each do |photo| %>
 
-    <div class="edit_photo span4" data-id-photo="<%= photo.id %>">
-      <img src="<%=photo.image_url %>/convert?w=300&h=300&fit=clip"></img>
+    <div class="edit_photo span3" data-id-photo="<%= photo.id %>">
+      <img src="<%=photo.image_url %>/convert?w=200&h=200&fit=clip"></img>
       <br>
       <br>
 
@@ -41,7 +41,7 @@
   <% end %>
 </div>
 
-<script>
+<script type="text/javascript">
   $('.album_dropdown').on("click", function(event) {
     console.log($(event.currentTarget).parent().attr('data-id-photo'));
     var photo_id = $(event.currentTarget).parent().attr('data-id-photo');

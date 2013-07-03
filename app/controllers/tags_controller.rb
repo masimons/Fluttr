@@ -1,7 +1,6 @@
 class TagsController < ApplicationController
 
-  def index
-    
+  def index 
   end
 
   def create

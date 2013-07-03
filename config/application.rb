@@ -62,5 +62,6 @@ module Flickr
     # Forces the application to not access the DB
     # or load models when precompiling your assets in Heroku.
     config.assets.initialize_on_precompile = false
+
   end
 end

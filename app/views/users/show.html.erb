@@ -1,9 +1,90 @@
+<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+
+<div class="cover_photo">
+    <!-- <img src="http://www.grit.com/uploadedImages/GRT/articles/issues/2012_Bunnyzine/Lop-Eared-Rabbit-Laying-Dow.jpg"> -->
+</div>
+
+<div class="profile_picture">
+</div>
+
 <h2><%= current_user.email %>'s Profile</h2>
+
+<button id="upload_profpic" class="btn btn-primary">Change Profile Pic</button>
+<br>
+<button id="upload_coverpic" class="btn btn-primary">Change Cover Photo</button>
+<br>
+
+<h3>Recent Photos</h3>
 
 <div>
   <% Photo.all.each do |photo| %>
     <div>
-      <img src="<%=photo.image_url %>/convert?w=300&h=300&fit=clip"></img>
+      <a href="<%= photo_path(photo) %>"><img src="<%=photo.image_url %>/convert?w=300&h=300&fit=clip"></img></a>
     </div>
   <% end %>
 </div>
+
+
+<script type="text/javascript">
+  filepicker.setKey('AhjzhTx37SyaNYS8XvjR9z');
+
+  var inkblobToUrl = function(InkBlobs) {
+    return InkBlobs[0].url;
+
+  }
+
+  $("#upload_profpic").on("click", function() {
+    filepicker.pickAndStore({multiple: false, mimetype:"image/*"},
+    {location:"S3"}, function(InkBlobs){
+
+      var url = inkblobToUrl(InkBlobs);
+      console.log(url);
+      // var img = "<img src='" + url + "/convert?w=300&h=300&fit=clip'></img>"
+      // $('.profile_picture').html(img);
+
+      $.ajax({
+        type: "PUT",
+        url: "/users/" + "<%= current_user.id %>" + ".json",
+        data: { user: {profile_url: url }},
+        success: function(data) {
+          console.log(data.profile_url);
+          var img = "<img src='" + data.profile_url + "/convert?w=150&h=150&fit=crop'></img>"
+          $('.profile_picture').html(img);
+        }
+      });
+
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  filepicker.setKey('AhjzhTx37SyaNYS8XvjR9z');
+
+  var inkblobToUrl = function(InkBlobs) {
+    return InkBlobs[0].url;
+
+  }
+
+  $("#upload_coverpic").on("click", function() {
+    filepicker.pickAndStore({multiple: false, mimetype:"image/*"},
+    {location:"S3"}, function(InkBlobs){
+
+      var url = inkblobToUrl(InkBlobs);
+      console.log(url);
+      // var img = "<img src='" + url + "/convert?w=300&h=300&fit=clip'></img>"
+      // $('.profile_picture').html(img);
+
+      $.ajax({
+        type: "PUT",
+        url: "/user/" + "<%= current_user.id %>" + ".json",
+        data: { user: {cover_url: url }},
+        success: function(data) {
+          console.log(data.image_url);
+          var img = data.image_url
+          $('.cover_photo').html(img);
+        }
+      });
+
+    });
+  });
+</script>

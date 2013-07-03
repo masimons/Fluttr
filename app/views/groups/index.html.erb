@@ -4,19 +4,61 @@
 
 <div>
   <% @owned_groups.each do |group| %>
-    <li><%= group.name %><br>
-        <a href="#" class="edit" id="edit_group_link" data-id="<%= group.id %>">Edit Group</a></li>
+    <div class="media">
+      <a class="pull-left" href="<%= group_path(group) %>">
+      <img class="media-object" src="<%= group.image_url %>/convert?w=100&h=100&fit=clip">
+      </a>
+      <div class="media-body">
+        <h4 style="display:inline" class="media-heading"><%= group.name %></h4>
+        <a href="#" class="edit" id="edit_group_link" data-id="<%= group.id %>">Edit</a></li>
+        <%= link_to "Delete", group_path(group), :method => :delete %>
+        <p><%= group.description %></p>
+   
+      <!-- Nested media object -->
+  <!--     <div class="media">
+        
+      </div> -->
+      </div>
+    </div>
+
     <div class="edit_form" id="edit_<%= group.id %>"></div>
   <% end %>
 </div>
 
-<h2>You are a member of:</h2>
+<% if @member_of_groups.empty? %>
+  <h2>You aren't a member of any groups yet!</h2>
+  <h4>Check some out <a href="<%= all_groups_path %>">here</a>.
+<% else %>
+  <h2>You are a member of:</h2>
 
-<div>
-  <% @member_of_groups.each do |group| %>
-    <li><%= group.name %></li>
-  <% end %>
-</div>
+  <div>
+    <% @member_of_groups.each do |group| %>
+      <div class="media">
+        <a class="pull-left" href="#">
+          <img class="media-object" src="<%= group.image_url %>/convert?w=100&h=100&fit=clip">
+        </a>
+        <div class="media-body">
+          <h4 class="media-heading"><%= group.name %></h4>
+          <%= group.description %>
+     
+        <!-- Nested media object -->
+    <!--     <div class="media">
+          
+        </div> -->
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+
+ <script>
+//   $('#edit_group_link').on("click" function(event) {
+//     templateFn = JST["edit"]
+//     renderedContent = templateFn({  })
+//   })
+
+// </script>
 
 <script>
 // //   $(document).ready(function() {
