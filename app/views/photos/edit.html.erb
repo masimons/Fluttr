@@ -20,6 +20,7 @@
       <br>
 
       <label for="public">Public</label>
+      <div id="public_label"></div>
       <input type="radio" name="photo[public]" id="public" 
              value="true" class="radio_button"
              <%= "checked" if photo.public == true %> >
@@ -47,19 +48,32 @@
     });
   });
 
-  $('.name_field').on("blur", function(event) {
+  $('.name_field').on("keypress", function(event) {
     // console.log($(event.currentTarget).val());
+    if (event.which === 13) {
+      var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
+      var value = $(event.currentTarget).val();
+      $.ajax({
+        url: '/photos/' + photo_id,
+        type: 'PUT',
+        data: {photo: {name:  value }},
+        success: function(data) {
+          $('#name_label').text("Saved").css("color", "green");
+        }
+      });
+    }
+  });
+
+  $('radio_button').on("click", function(event) {
     var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
     var value = $(event.currentTarget).val();
     $.ajax({
       url: '/photos/' + photo_id,
       type: 'PUT',
-      data: {photo: {name:  value }},
+      data: {photo: {public: value}}
       success: function(data) {
-        $('#name_label').text("Saved").css("color", "green");
+        $('#public_label').text("Saved").css("color", "green");
       }
     });
   });
-
-  // $('radio_button').on("click", )
 </script>
