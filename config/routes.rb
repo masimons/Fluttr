@@ -3,8 +3,12 @@ Flickr::Application.routes.draw do
 
   resources :users, :only => [:show] do
     resources :groups, :only => [:index, :edit]
+    resources :albums
   end
+  
   resources :photos
+  
+  resources :tags
 
   resources :groups, :only => [:create, :new]
   

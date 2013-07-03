@@ -1,7 +1,7 @@
-
+<div class="row">
   <% @photos.each do |photo| %>
 
-    <div class="edit_photo" data-id-photo="<%= photo.id %>">
+    <div class="edit_photo span4" data-id-photo="<%= photo.id %>">
       <img src="<%=photo.image_url %>/convert?w=300&h=300&fit=clip"></img>
       <br>
       <br>
@@ -9,6 +9,7 @@
       <label for="name">Name</label>
       <div id="name_label"></div>
       <input class="name_field" type="text" name="photo[name]" id="name" />
+      <br><br>
 
       <label for="album">Album</label>
       <div id="album_label"></div>
@@ -18,20 +19,27 @@
         <% end %>
       </select>
       <br>
+      <br>
 
-      <label for="public">Public</label>
       <div id="public_label"></div>
+      <label style="display: inline;" for="public">Public</label>
       <input type="radio" name="photo[public]" id="public" 
              value="true" class="radio_button"
              <%= "checked" if photo.public == true %> >
-      <label for="private">Private</label> 
+      <label style="display: inline;" for="private">Private</label> 
       <input type="radio" name="photo[public]" id="private" 
              value="false" class="radio_button"
              <%= "checked" if photo.public == false %> >
-     
+      <br>
+      <br>
+
+      <label for="tag">Add Tags:</label>
+      <div id="tag_label"></div>
+      <input type="text" class="tag_field" id="tag" />
 
     </div>
   <% end %>
+</div>
 
 <script>
   $('.album_dropdown').on("click", function(event) {
@@ -64,16 +72,32 @@
     }
   });
 
-  $('radio_button').on("click", function(event) {
+  $('.radio_button').on("click", function(event) {
     var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
     var value = $(event.currentTarget).val();
     $.ajax({
       url: '/photos/' + photo_id,
       type: 'PUT',
-      data: {photo: {public: value}}
+      data: {photo: {public: value}},
       success: function(data) {
         $('#public_label').text("Saved").css("color", "green");
       }
     });
   });
+
+  $('.tag_field').on("keypress", function(event) {
+    if (event.which === 13) {
+      var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
+      var name = $(event.currentTarget).val();
+      $.ajax({
+        url: '/tags',
+        type: 'POST',
+        data: { photo_id: photo_id, name: name},
+        success: function(data) {
+          $(event.currentTarget).val('');
+          $('#tag_label').append('<p>' + data.name + '</p>');
+        }
+      })
+    }
+  })
 </script>

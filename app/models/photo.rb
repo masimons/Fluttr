@@ -14,11 +14,14 @@
 class Photo < ActiveRecord::Base
   # before_validation :add_album
 
-  attr_accessible :name, :album_id, :image_url
+  attr_accessible :name, :album_id, :image_url, :public
 
   # validates :name, :presence => true
 
   belongs_to :album
+  
+  has_many :taggings
+  has_many :tags, :through => :taggings
 
 
   # def add_album

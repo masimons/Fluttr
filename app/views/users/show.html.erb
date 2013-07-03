@@ -3,7 +3,7 @@
 <div>
   <% Photo.all.each do |photo| %>
     <div>
-      <%= image_tag photo.image_url %>
+      <img src="<%=photo.image_url %>/convert?w=300&h=300&fit=clip"></img>
     </div>
   <% end %>
 </div>
