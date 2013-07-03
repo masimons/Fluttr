@@ -20,10 +20,12 @@
       <br>
 
       <label for="public">Public</label>
-      <input type="radio" name="photo[public]" id="public" value="true"
+      <input type="radio" name="photo[public]" id="public" 
+             value="true" class="radio_button"
              <%= "checked" if photo.public == true %> >
       <label for="private">Private</label> 
-      <input type="radio" name="photo[public]" id="private" value="false"
+      <input type="radio" name="photo[public]" id="private" 
+             value="false" class="radio_button"
              <%= "checked" if photo.public == false %> >
      
 
@@ -31,7 +33,7 @@
   <% end %>
 
 <script>
-  $('.album_dropdown').on("blur", function(event) {
+  $('.album_dropdown').on("click", function(event) {
     console.log($(event.currentTarget).parent().attr('data-id-photo'));
     var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
     var album_id_var = $(event.currentTarget).val();
@@ -58,4 +60,6 @@
       }
     });
   });
+
+  // $('radio_button').on("click", )
 </script>
