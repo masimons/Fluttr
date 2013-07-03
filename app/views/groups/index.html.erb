@@ -1,0 +1,29 @@
+<%= link_to "Create a group", new_group_path %>
+
+<h2>You are the creator of:</h2>
+
+<div>
+  <% @owned_groups.each do |group| %>
+    <li><%= group.name %><br>
+        <a href="#" class="edit" id="edit_group_link" data-id="<%= group.id %>">Edit Group</a></li>
+    <div class="edit_form" id="edit_<%= group.id %>"></div>
+  <% end %>
+</div>
+
+<h2>You are a member of:</h2>
+
+<div>
+  <% @member_of_groups.each do |group| %>
+    <li><%= group.name %></li>
+  <% end %>
+</div>
+
+<script>
+// //   $(document).ready(function() {
+// //     $('a#edit_group_link').on("click", function(event) {
+// //       console.log($(event.currentTarget).attr('data-id'));
+// //       id = $(event.currentTarget).attr('data-id'));
+// //       $('#edit_' + id).html()
+// //     });
+// //   });
+</script>

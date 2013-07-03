@@ -11,7 +11,53 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130701053610) do
+ActiveRecord::Schema.define(:version => 20130702221304) do
+
+  create_table "albums", :force => true do |t|
+    t.string   "title"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "friendships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "friend_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "groups", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "creator_id"
+    t.string   "image_url"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "groups", ["creator_id"], :name => "index_groups_on_creator_id"
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "memberships", ["group_id"], :name => "index_memberships_on_group_id"
+  add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
+
+  create_table "photos", :force => true do |t|
+    t.string   "name"
+    t.integer  "album_id"
+    t.string   "image_url"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.boolean  "public",     :default => true
+  end
+
+  add_index "photos", ["album_id"], :name => "index_photos_on_album_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

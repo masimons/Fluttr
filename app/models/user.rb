@@ -13,10 +13,6 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :string(255)
 #  last_sign_in_ip        :string(255)
-#  confirmation_token     :string(255)
-#  confirmed_at           :datetime
-#  confirmation_sent_at   :datetime
-#  unconfirmed_email      :string(255)
 #  failed_attempts        :integer          default(0)
 #  unlock_token           :string(255)
 #  locked_at              :datetime
@@ -25,13 +21,26 @@
 #
 
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
+  after_create :add_album
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-  # attr_accessible :title, :body
+  attr_accessible :email, :password, :password_confirmation, :remember_mey
+
+  has_many :albums
+  has_many :photos, :through => :albums
+
+  has_many :memberships
+  has_many :groups, :through => :memberships
+
+  has_many :owned_groups, :class_name => "Group", :foreign_key => :creator_id
+
+  has_many :friendships
+  has_many :friends, :through => :friendships
+
+  def add_album
+    self.albums.create!(:title => "Other")
+  end
+
 end

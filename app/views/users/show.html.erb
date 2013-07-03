@@ -1,0 +1,9 @@
+<h2><%= current_user.email %>'s Profile</h2>
+
+<div>
+  <% Photo.all.each do |photo| %>
+    <div>
+      <%= image_tag photo.image_url %>
+    </div>
+  <% end %>
+</div>

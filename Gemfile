@@ -18,6 +18,7 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+  gem "jquery-fileupload-rails"
 end
 
 group :development do
@@ -29,6 +30,9 @@ end
 gem 'jquery-rails'
 
 gem 'devise'
+gem 'pg'
+
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
