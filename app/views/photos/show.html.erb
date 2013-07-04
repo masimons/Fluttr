@@ -3,34 +3,32 @@
 </div>
 <br>
 
+<div class="comments">
+</div>
+<br>
+
 <div data-id-photo="<%= @photo.id %>">
   <textarea class="comment" id="comment_body" placeholder="Write a comment"></textarea>
 </div>
 <br>
 
-<div class="comments">
-</div>
-
 <script type="text/javascript">
   $('#comment_body').on("keypress", function(event) {
     if (event.which === 13) {
       var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
-      var body = $(event.currentTarget).val());
+      var body = $(event.currentTarget).val();
     $.ajax({
-      url: '/comments',
+      url: '/photos/' + photo_id + "/comments.json",
+      type: "POST",
+      data: { comment: {photo_id: photo_id, 
+                        user_id: <%= current_user.id %>,
+                        body: body }},
+      success: function(data) {
+        console.log(data.body);
+        new_comment = "<p>" + data.body + "</p>"
+        $('.comments').append(new_comment);
+      }
     })
     }
   })
 </script>
-<!-- 
- if (event.which === 13) {
-      var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
-      var value = $(event.currentTarget).val();
-      $.ajax({
-        url: '/photos/' + photo_id,
-        type: 'PUT',
-        data: {photo: {name:  value }},
-        success: function(data) {
-          $('#name_label').text("Saved").css("color", "green");
-        }
-      }); -->
