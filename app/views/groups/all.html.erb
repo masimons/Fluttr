@@ -8,7 +8,8 @@
     </a>
     <div class="media-body">
       <h4 style="display:inline" class="media-heading"><%= group.name %></h4>
-        <a href="<%= memberships_path %>">Join</a></li>
+        <a class="join" data-id="<%= group.id %>">Join</a></li>
+        <a class="leave hidden" data-id="<%= group.id %>">Leave Group</a></li>
       <p><%= group.description %></p>
    
       <!-- Nested media object -->
@@ -19,4 +20,19 @@
   </div>
   <% end %>
 </div>
+
+<script type="text/javascript">
+  $('a.join').on("click", function(event) {
+    console.log($(event.currentTarget).attr('data-id'));
+    group_id = $(event.currentTarget).attr('data-id');
+    $.ajax({
+      url: "/memberships",
+      type: "POST",
+      data: { membership: {group_id: group_id, user_id: <%= current_user.id %> }},
+      success: function(data) {
+        console.log(data);
+      }
+    });
+  });
+</script>
 
