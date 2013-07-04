@@ -17,6 +17,17 @@ class GroupsController < ApplicationController
     end
   end
 
+  def edit
+    
+  end
+
+  def update
+    @photo = Photo.create(params[:photo])
+    respond_to do |format|
+      format.json { render :json => @photo }
+    end
+  end
+
   def all
     @groups = Group.order('created_at DESC') # where(:public => true)
   end

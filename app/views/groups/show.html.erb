@@ -1,6 +1,9 @@
+<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+
 <div class="row-fluid">
   <div class="span3">
-    <img src="<%= @group.image_url %>/convert?w=200&h=200&fit=clip">
+    <img id="img" data-id="<%= @group.id %>" src="<%= @group.image_url %>/convert?w=200&h=200&fit=clip">
+    <button id="upload_button" data-id="<%= @group.id %>" class="btn btn-primary">Add a photo</button>
   </div>
   <div class="span9">
     <h2><%= @group.name %></h2>
@@ -8,5 +11,41 @@
     <p>
       <%= @group.description %>
     </p>
+
+    <div id="group_photos">
+      <% @group.photos.each do |photo| %>
+        <span><a href="<%= photo_path(photo) %>"><%= image_tag photo.image_url %></a></span>
+      <% end %>
+    </div>
+    
   </div>
 </div>
+
+<script type="text/javascript">
+  filepicker.setKey('AhjzhTx37SyaNYS8XvjR9z');
+
+  var inkblobToUrl = function(InkBlobs) {
+    return InkBlobs[0].url;
+  }
+
+  $("#upload_button").on("click", function() {
+    filepicker.pickAndStore({multiple: true, mimetype:"image/*"},
+    {location:"S3"}, function(InkBlobs){
+      var url = inkblobToUrl(InkBlobs);
+
+      $.ajax({
+        type: "PUT",
+        url: "/groups/" + <%= @group.id %> + ".json",
+        data: { photo: {imageable_id: <%= @group.id %>, imageable_type: "Group", image_url: url}},
+        success: function(data) {
+          console.log(data.id);
+
+          var image = "<span><a href='/photos/" + data.id +"'><img src='" + data.image_url + "'></a></span>"
+          console.log(image);
+          $('#group_photos').append(image);
+        }
+      });
+
+    });
+  });
+</script>

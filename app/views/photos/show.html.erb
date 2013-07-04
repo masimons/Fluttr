@@ -3,7 +3,19 @@
 </div>
 <br>
 
+
 <div class="comments">
+  <% @comments.each do |comment| %>
+    <div class="media">
+      <a class="pull-left" href="<%= user_path(comment.user) %>">
+        <img class="media-object" src="<%= comment.user.profile_url %>/convert?w=50&h=50&fit=clip">
+      </a>
+      <div class="media-body">
+        <h5 class="media-heading"><%= comment.user.email %></h5>
+        <%= comment.body %>
+      </div>
+    </div>
+  <% end %>
 </div>
 <br>
 
@@ -24,11 +36,18 @@
                         user_id: <%= current_user.id %>,
                         body: body }},
       success: function(data) {
-        console.log(data.body);
-        new_comment = "<p>" + data.body + "</p>"
+        console.log(data.user.profile_url);
+        var profpic = data.user.profile_url + "/convert?w=50&h=50&fit=clip";
+        var body = data.comment.body;
+        var user_show = "/users/" + data.user.id;
+
+        new_comment = "<div class='media'><a class='pull-left' href='" + user_show + "'><img class='media-object' src='" + profpic
+        + "'></a><div class='media-body'><h5 class='media-heading'>" + data.user.email + "</h5>" + body + "</div></div>"
+
+        $('textarea#comment_body').val('');
         $('.comments').append(new_comment);
       }
-    })
+    });
     }
   })
 </script>

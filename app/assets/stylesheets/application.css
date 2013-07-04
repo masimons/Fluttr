@@ -32,6 +32,10 @@ textarea.comment {
   width: 500px;
 }
 
+div.comments {
+  width: 500px;
+}
+
 /*div.show_photo {
   position: center;
 }*/

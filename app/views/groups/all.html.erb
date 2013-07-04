@@ -8,8 +8,10 @@
     </a>
     <div class="media-body">
       <h4 style="display:inline" class="media-heading"><%= group.name %></h4>
-        <a class="join" data-id="<%= group.id %>">Join</a></li>
-        <a class="leave hidden" data-id="<%= group.id %>">Leave Group</a></li>
+
+        <a id="join<%= group.id %>" class="join" style="display:<%= 'none' if group.members.include?(current_user) %>" data-id="<%= group.id %>">Join</a></li>
+        <a id="leave<%= group.id %>" class="leave" style="display:<%= 'none' if !group.members.include?(current_user) %>" data-id="<%= group.id %>">Leave Group</a></li>
+
       <p><%= group.description %></p>
    
       <!-- Nested media object -->
@@ -23,14 +25,31 @@
 
 <script type="text/javascript">
   $('a.join').on("click", function(event) {
-    console.log($(event.currentTarget).attr('data-id'));
     group_id = $(event.currentTarget).attr('data-id');
     $.ajax({
       url: "/memberships",
       type: "POST",
       data: { membership: {group_id: group_id, user_id: <%= current_user.id %> }},
       success: function(data) {
-        console.log(data);
+        console.log(event.currentTarget);
+        $("a#join" + group_id).toggle();
+        console.log($("a#join" + group_id));
+        $('a#leave' + group_id).toggle();
+        console.log($("a#leave" + group_id));
+      }
+    });
+  });
+
+  $('a.leave').on("click", function(event) {
+    group_id = $(event.currentTarget).attr('data-id');
+    $.ajax({
+      url: "/memberships/destroy_membership",
+      type: "DELETE",
+      data: { group_id: group_id },
+      success: function(data) {
+        console.log($(event.currentTarget));;
+        $("a#join" + group_id).toggle();
+        $('a#leave' + group_id).toggle();
       }
     });
   });
