@@ -17,7 +17,7 @@ class Group < ActiveRecord::Base
   has_many :memberships, :dependent => :destroy
   has_many :members, :through => :memberships, :source => :user, :dependent => :destroy
 
-  has_many :photos
+  has_many :photos, :as => :imageable
 
   belongs_to :creator, :class_name => "User", :foreign_key => :creator_id
 end

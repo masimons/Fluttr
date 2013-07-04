@@ -1,0 +1,36 @@
+<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+
+<h3>Create a new album</h3>
+
+<button id="upload_button" class="btn btn-primary">Add photos</button>
+
+<script type="text/javascript">
+  filepicker.setKey('AhjzhTx37SyaNYS8XvjR9z');
+
+  var inkblobToUrl = function(InkBlobs) {
+    var urls = []
+
+    for (var i=0; i<InkBlobs.length; i++) {
+      urls.push(InkBlobs[i].url)
+    }
+
+    return urls;
+  }
+
+  $("#upload_button").on("click", function() {
+    filepicker.pickAndStore({multiple: true, mimetype:"image/*"},
+    {location:"S3"}, function(InkBlobs){
+      var urls = inkblobToUrl(InkBlobs);
+
+      $.ajax({
+        type: "POST",
+        url: "/photos",
+        data: { urls: urls },
+        success: function(data) {
+          $('#yield').html(data);  
+        }
+      });
+
+    });
+  });
+</script>
