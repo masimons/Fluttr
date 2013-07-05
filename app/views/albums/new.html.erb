@@ -3,7 +3,7 @@
 <h3>Create a new album</h3>
 
 <label for="album">Album title:</label>
-<input type="text" id="album">
+<input type="text" id="album_title">
 <br>
 
 <button id="upload_button" class="btn btn-primary">Add photos</button>
@@ -12,7 +12,7 @@
   filepicker.setKey('AhjzhTx37SyaNYS8XvjR9z');
 
   var inkblobToUrl = function(InkBlobs) {
-    var urls = []
+    var urls = [];
 
     for (var i=0; i<InkBlobs.length; i++) {
       urls.push(InkBlobs[i].url)
@@ -21,20 +21,32 @@
     return urls;
   }
 
-  $("#upload_button").on("click", function() {
+  $("#upload_button").on("click", function(event) {
+    
     filepicker.pickAndStore({multiple: true, mimetype:"image/*"},
-    {location:"S3"}, function(InkBlobs){
+    {location:"S3"}, function(InkBlobs) {
       var urls = inkblobToUrl(InkBlobs);
+
+      album_title = $('#album_title').val();
+      console.log(album_title);
 
       $.ajax({
         type: "POST",
-        url: "/photos",
-        data: { urls: urls },
+        url: "/users/" + <%= current_user.id %> + "/albums.json",
+        data: { album: { title: album_title }},
         success: function(data) {
-          $('#yield').html(data);  
-        }
-      });
 
+          $.ajax({
+            type: "POST",
+            url: "/photos",
+            data: { urls: urls, album_id: data.id },
+            success: function(data) {
+              $('#yield').html(data);
+            }
+          })
+
+        }
+      })
     });
   });
 </script>

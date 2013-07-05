@@ -1,0 +1,10 @@
+<h2><%= @album.title %></h2>
+<%= link_to "Edit album", edit_user_album_path(current_user, @album) %>
+
+<div class="row-fluid">
+  <% @album.photos.each do |photo| %>
+    <div class="span3">
+      <img src="<%= photo.image_url %>/convert?w=200&h=200&fit=clip">
+    </div>
+  <% end %>
+</div>

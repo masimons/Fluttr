@@ -7,21 +7,21 @@
       <br>
 
       <label for="name">Name</label>
-      <div id="name_label"></div>
+      <div id="name_label<%= photo.id %>"></div>
       <input class="name_field" type="text" name="photo[name]" id="name" />
       <br><br>
 
       <label for="album">Album</label>
-      <div id="album_label"></div>
+      <div id="album_label<%= photo.id %>"></div>
       <select class="album_dropdown" id="album" name="photo[album_id]">
         <% @albums.each do |album| %>
-          <option value="<%= album.id %>"><%= album.title %></option>
+          <option value="<%= album.id %>" <%= 'selected' if photo.imageable_id == album.id && photo.imageable_type == "Album" %>><%= album.title %></option>
         <% end %>
       </select>
       <br>
       <br>
 
-      <div id="public_label"></div>
+      <div id="public_label<%= photo.id %>"></div>
       <label style="display: inline;" for="public">Public</label>
       <input type="radio" name="photo[public]" id="public" 
              value="true" class="radio_button"
@@ -34,7 +34,7 @@
       <br>
 
       <label for="tag">Add Tags:</label>
-      <div id="tag_label"></div>
+      <div id="tag_label<%= photo.id %>"></div>
       <input type="text" class="tag_field" id="tag" />
 
     </div>
@@ -51,7 +51,7 @@
       type: 'PUT',
       data: {photo: {imageable_id: album_id_var, imageable_type: "Album"}},
       success: function(data) {
-        $('#album_label').text("Saved").css("color", "green");
+        $('#album_label' + data.id).text("Saved").css("color", "green");
       }
     });
   });
@@ -66,7 +66,7 @@
         type: 'PUT',
         data: {photo: {name:  value}},
         success: function(data) {
-          $('#name_label').text("Saved").css("color", "green");
+          $('#name_label' + data.id).text("Saved").css("color", "green");
         }
       });
     }
@@ -80,7 +80,7 @@
       type: 'PUT',
       data: {photo: {public: value}},
       success: function(data) {
-        $('#public_label').text("Saved").css("color", "green");
+        $('#public_label' + data.id).text("Saved").css("color", "green");
       }
     });
   });
@@ -94,8 +94,9 @@
         type: 'POST',
         data: { photo_id: photo_id, name: name},
         success: function(data) {
+          console.log(data);
           $(event.currentTarget).val('');
-          $('#tag_label').append('<p>' + data.name + '</p>');
+          $('div#tag_label' + photo_id).append('<p>' + data.name + '</p>');
         }
       })
     }

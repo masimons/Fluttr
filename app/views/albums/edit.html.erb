@@ -1,5 +1,29 @@
+<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+
+<h2 id="album_title" style="display: inline;"><%= @album.title %></h2>
+
+
+<div>
+  <label for="title">Change title</label>
+  <input id="title" style="display: inline" type="text" placeholder="<%= @album.title %>">
+<div>
+</br>
+
+<label for="tag">Tags for all photos:</label>
+<div id="universal_tag_label"></div>
+<input type="text" class="universal_tag_field" id="universal_tag" data-id="<%= @album.id %>"/>
+<br>
+
+<button id="upload_button" class="btn btn-primary">Add photos</button>
+
+
+<br>
+<br>
+<br>
+
+
 <div class="row-fluid">
-  <% @photos.each do |photo| %>
+  <% @album.photos.each do |photo| %>
 
     <div class="edit_photo span3" data-id-photo="<%= photo.id %>">
       <img src="<%=photo.image_url %>/convert?w=200&h=200&fit=clip"></img>
@@ -7,21 +31,21 @@
       <br>
 
       <label for="name">Name</label>
-      <div id="name_label"></div>
+      <div id="name_label<%= photo.id %>"></div>
       <input class="name_field" type="text" name="photo[name]" id="name" />
       <br><br>
 
       <label for="album">Album</label>
-      <div id="album_label"></div>
+      <div id="album_label<%= photo.id %>"></div>
       <select class="album_dropdown" id="album" name="photo[album_id]">
         <% @albums.each do |album| %>
-          <option value="<%= album.id %>"><%= album.title %></option>
+          <option value="<%= @album.id %>" <%= 'selected' if photo.imageable_id == @album.id && photo.imageable_type == "Album" %>><%= @album.title %></option>
         <% end %>
       </select>
       <br>
       <br>
 
-      <div id="public_label"></div>
+      <div id="public_label<%= photo.id %>"></div>
       <label style="display: inline;" for="public">Public</label>
       <input type="radio" name="photo[public]" id="public" 
              value="true" class="radio_button"
@@ -33,8 +57,8 @@
       <br>
       <br>
 
-      <label for="tag">Add Tags:</label>
-      <div id="tag_label"></div>
+      <label for="tag">Photo tags:</label>
+      <div id="tag_label<%= photo.id %>"></div>
       <input type="text" class="tag_field" id="tag" />
 
     </div>
@@ -42,6 +66,39 @@
 </div>
 
 <script type="text/javascript">
+
+  filepicker.setKey('AhjzhTx37SyaNYS8XvjR9z');
+
+  var inkblobToUrl = function(InkBlobs) {
+    var urls = [];
+
+    for (var i=0; i<InkBlobs.length; i++) {
+      urls.push(InkBlobs[i].url)
+    }
+
+    return urls;
+  }
+
+  $('#upload_button').on("click", function(event) {
+    filepicker.pickAndStore(
+      {multiple: true, mimetype:"image/*"},
+      {location:"S3"}, 
+      function(InkBlobs) {
+        var urls = inkblobToUrl(InkBlobs);
+        var album_id = <%= @album.id %>;
+        $.ajax({
+          url: "/photos",
+          type: "POST",
+          data: { album_id: album_id, urls: urls },
+          success: function(data) {
+            $('#yield').html(data);
+          }
+        });
+      }
+    )
+  });
+
+
   $('.album_dropdown').on("click", function(event) {
     console.log($(event.currentTarget).parent().attr('data-id-photo'));
     var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
@@ -51,7 +108,8 @@
       type: 'PUT',
       data: {photo: {imageable_id: album_id_var, imageable_type: "Album"}},
       success: function(data) {
-        $('#album_label').text("Saved").css("color", "green");
+        console.log(data);
+        $('#album_label' + data.id).text("Saved").css("color", "green");
       }
     });
   });
@@ -66,7 +124,7 @@
         type: 'PUT',
         data: {photo: {name:  value}},
         success: function(data) {
-          $('#name_label').text("Saved").css("color", "green");
+          $('#name_label' + data.id).text("Saved").css("color", "green");
         }
       });
     }
@@ -80,7 +138,7 @@
       type: 'PUT',
       data: {photo: {public: value}},
       success: function(data) {
-        $('#public_label').text("Saved").css("color", "green");
+        $('#public_label' + data.id).text("Saved").css("color", "green");
       }
     });
   });
@@ -92,12 +150,48 @@
       $.ajax({
         url: '/tags',
         type: 'POST',
-        data: { photo_id: photo_id, name: name},
+        data: { photo_id: photo_id, name: name },
         success: function(data) {
+          console.log(data);
           $(event.currentTarget).val('');
-          $('#tag_label').append('<p>' + data.name + '</p>');
+          $('div#tag_label' + photo_id).append('<p>' + data.name + '</p>');
         }
       })
     }
   })
+
+  $('#title').on("keypress", function(event) {
+    if (event.which === 13) {
+      new_title = $(event.currentTarget).val();
+      $.ajax({
+        url: "/users/" + <%= current_user.id %> + "/albums/" + <%= @album.id %> + ".json",
+        type: 'PUT',
+        data: { album: { title: new_title }},
+        success: function(data) {
+          $('#title').val('');
+          $('#album_title').text(data.title);
+        }
+      })
+    }
+  })
+
+  $('#universal_tag').on("keypress", function(event) {
+    if (event.which === 13) {
+      var name = $(event.currentTarget).val();
+      // console.log($(event.currentTarget).attr('data-id'));
+      $.ajax({
+        url: '/tags',
+        type: 'POST',
+        data: { name: name, album_id: <%= @album.id %> },
+        success: function(data) {
+          console.log(data);
+          $('#universal_tag').val('');
+          $('#universal_tag_label').append("<p>" + data.name + "</p>")
+          // $('#universal_tag_label').append('<p>' + data.name + '</p>');
+        }
+      })
+    }
+  })
+
+
 </script>

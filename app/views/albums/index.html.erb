@@ -1,0 +1,16 @@
+<%= link_to "Add an album", new_user_album_path(current_user) %>
+
+<div class="row-fluid">
+  <% @albums.each do |album| %>
+    <div class="span3">
+      <% if album.photos.empty? %>
+        No photos!
+      <% else %>
+        <a href="<%= user_album_path(current_user, album) %>">
+          <img src="<%= album.photos.first.image_url %>/convert?w=200&h=200&fit=clip">
+        </a>
+      <% end %>
+    </div>
+  <% end %>
+
+</div>

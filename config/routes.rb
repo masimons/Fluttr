@@ -20,7 +20,7 @@ Flickr::Application.routes.draw do
 
   resources :groups, :only => [:create, :new, :show, :destroy, :edit, :update] do
     collection do
-      get 'all', :as => :all_groups
+      get 'all', :as => :all
     end
   end
 

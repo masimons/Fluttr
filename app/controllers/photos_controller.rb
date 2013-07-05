@@ -8,15 +8,27 @@ class PhotosController < ApplicationController
 
   def create
     urls = params[:urls]
-
+    album_id = params[:album_id]
     @albums = current_user.albums
-    album = @albums.where(:title => "Other").first
+    
+    if album_id
+      go_to_photo_edit_view = false
+      @album = Album.find(album_id)
+    else
+      go_to_photo_edit_view = true
+      @album = @albums.where(:title => "Other").first
+    end
 
     @photos = urls.map do |url|
-      album.photos.create(:image_url => url)
+      @album.photos.create(:image_url => url)
     end
-  
-    render :edit, :layout => false
+
+    if go_to_photo_edit_view
+      render :edit, :layout => false 
+    else
+      render "albums/edit", :layout => false
+    end
+
   end
 
   def show
