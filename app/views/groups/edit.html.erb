@@ -1,0 +1,47 @@
+<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+
+<h2>Edit <%= @group.name %></h2>
+
+<button id="upload_button" class="btn btn-primary">Change Avatar</button>
+<br>
+<div id="avatar_div">
+  <img src="<%= @group.image_url %>/convert?w=150&h=150&fit=clip">
+</div>
+
+<%= form_for @group do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <br>
+  <br>
+
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+
+  <br>
+  <br>
+
+  <input id="hidden_url" type="hidden" name="group[image_url]" value="<%= @group.image_url %>">
+
+  <%= f.submit "Save changes" %>
+<% end %>
+
+<script type="text/javascript">
+  filepicker.setKey('AhjzhTx37SyaNYS8XvjR9z');
+
+  var inkblobToUrl = function(InkBlobs) {
+    return InkBlobs[0].url;
+
+  }
+
+  $("#upload_button").on("click", function() {
+    filepicker.pickAndStore({multiple: false, mimetype:"image/*"},
+    {location:"S3"}, function(InkBlobs){
+
+      var url = inkblobToUrl(InkBlobs);
+      console.log(url);
+      var img = "<img src='" + url + "/convert?w=150&h=150&fit=clip'></img>"
+      $('#avatar_div').html(img);
+      $('#hidden_url').attr('value', url);
+    });
+  });
+</script>

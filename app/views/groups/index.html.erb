@@ -10,7 +10,7 @@
         </a>
         <div class="media-body">
           <h4 style="display:inline" class="media-heading"><%= group.name %></h4>
-          <a href="#" class="edit" id="edit_group_link" data-id="<%= group.id %>">Edit</a></li>
+          <a href="<%= edit_group_path(group) %>" class="edit" id="edit_group_link" data-id="<%= group.id %>">Edit</a></li>
           <%= link_to "Delete", group_path(group), :method => :delete %>
           <p><%= group.description %></p>
      

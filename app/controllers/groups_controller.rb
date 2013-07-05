@@ -18,14 +18,19 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    
+    @group = Group.find(params[:id])
   end
 
   def update
-    @photo = Photo.create(params[:photo])
-    respond_to do |format|
-      format.json { render :json => @photo }
-    end
+    @group = Group.find(params[:id])
+
+    @group.update_attributes(params[:group])
+    redirect_to group_path(@group)
+
+    # @photo = Photo.create(params[:photo])
+    # respond_to do |format|
+    #   format.json { render :json => @photo }
+    # end
   end
 
   def all
