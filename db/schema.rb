@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130704032948) do
+ActiveRecord::Schema.define(:version => 20130705173307) do
 
   create_table "albums", :force => true do |t|
     t.string   "title"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(:version => 20130704032948) do
 
   add_index "comments", ["photo_id"], :name => "index_comments_on_photo_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "favorites", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "photo_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "favorites", ["photo_id"], :name => "index_favorites_on_photo_id"
+  add_index "favorites", ["user_id"], :name => "index_favorites_on_user_id"
 
   create_table "friendships", :force => true do |t|
     t.integer  "user_id"

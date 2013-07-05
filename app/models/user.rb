@@ -44,6 +44,9 @@ class User < ActiveRecord::Base
 
   has_many :comments
 
+  has_many :favorites
+  has_many :favorite_photos, :through => :favorites, :source => :photo
+
   def add_album
     self.albums.create!(:title => "Other")
   end

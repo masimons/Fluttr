@@ -1,0 +1,5 @@
+<h2>My Favorite Photos</h2>
+
+<% @favorites.each do |photo| %>
+  <a href="<%= photo_path(photo) %>"><img src="<%= photo.image_url %>/convert?w=200&h=200&fit=clip"></a>
+<% end %>

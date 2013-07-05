@@ -25,7 +25,7 @@
 
 <script type="text/javascript">
   $('a.join').on("click", function(event) {
-    group_id = $(event.currentTarget).attr('data-id');
+    var group_id = $(event.currentTarget).attr('data-id');
     $.ajax({
       url: "/memberships",
       type: "POST",
@@ -41,7 +41,7 @@
   });
 
   $('a.leave').on("click", function(event) {
-    group_id = $(event.currentTarget).attr('data-id');
+    var group_id = $(event.currentTarget).attr('data-id');
     $.ajax({
       url: "/memberships/destroy_membership",
       type: "DELETE",
