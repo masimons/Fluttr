@@ -22,15 +22,17 @@ class GroupsController < ApplicationController
   end
 
   def update
-    @group = Group.find(params[:id])
+    if params[:group]
+      @group = Group.find(params[:id])
 
-    @group.update_attributes(params[:group])
-    redirect_to group_path(@group)
-
-    # @photo = Photo.create(params[:photo])
-    # respond_to do |format|
-    #   format.json { render :json => @photo }
-    # end
+      @group.update_attributes(params[:group])
+      redirect_to group_path(@group)
+    else
+      @photo = Photo.create(params[:photo])
+      respond_to do |format|
+        format.json { render :json => @photo }
+      end
+    end
   end
 
   def all
