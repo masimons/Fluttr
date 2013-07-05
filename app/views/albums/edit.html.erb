@@ -39,7 +39,7 @@
       <div id="album_label<%= photo.id %>"></div>
       <select class="album_dropdown" id="album" name="photo[album_id]">
         <% @albums.each do |album| %>
-          <option value="<%= @album.id %>" <%= 'selected' if photo.imageable_id == @album.id && photo.imageable_type == "Album" %>><%= @album.title %></option>
+          <option value="<%= @album.id %>" <%= 'selected' if photo.imageable_id == @album.id && photo.imageable_type == "Album" %>><%= album.title %></option>
         <% end %>
       </select>
       <br>
