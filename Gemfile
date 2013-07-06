@@ -29,6 +29,8 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'pg'
 
+gem 'gritter'
+
 # gem 'nokogiri'
 # gem 'sunspot_rails'
 

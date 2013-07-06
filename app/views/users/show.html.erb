@@ -1,19 +1,15 @@
 <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
 
-<div class="cover_photo">
-    <!-- <img src="http://www.grit.com/uploadedImages/GRT/articles/issues/2012_Bunnyzine/Lop-Eared-Rabbit-Laying-Dow.jpg"> -->
-</div>
+<img class="cover_photo" src="<%= current_user.cover_url %>">
 
-<div class="profile_picture">
-  <img src="<%= current_user.profile_url %>/convert?w=150&h=150&fit=crop">
-</div>
+<img class="profile_picture" src="<%= current_user.profile_url %>/convert?w=150&h=150&fit=crop">
 
-<h2><%= current_user.email %>'s Profile</h2>
+<h2 style="display: inline;" class="profile_username"><%= current_user.username %>'s Profile</h2>
 
-<button id="upload_profpic" class="btn btn-primary">Change Profile Pic</button>
-<br>
-<button id="upload_coverpic" class="btn btn-primary">Change Cover Photo</button>
-<br>
+<a class="pull-right" id="follow" style="display:<%= 'none' if current_user.followees.include?(@user) %>" data-id="<%= @user.id %>">
+  <button class="btn btn-primary btn-large">Follow</button></a>
+<a class="pull-right" id="unfollow" style="display:<%= 'none' if !current_user.followees.include?(@user) %>" data-id="<%= @user.id %>">
+  <button class="btn btn-primary btn-large">Unfollow</button></a>
 
 <h3>Recent Photos</h3>
 
@@ -34,12 +30,11 @@
 
   }
 
-  $("#upload_profpic").on("click", function() {
+  $("img.profile_picture").on("click", function(event) {
     filepicker.pickAndStore({multiple: false, mimetype:"image/*"},
     {location:"S3"}, function(InkBlobs){
 
       var url = inkblobToUrl(InkBlobs);
-      console.log(url);
       // var img = "<img src='" + url + "/convert?w=300&h=300&fit=clip'></img>"
       // $('.profile_picture').html(img);
 
@@ -49,8 +44,30 @@
         data: { user: {profile_url: url }},
         success: function(data) {
           console.log(data.profile_url);
-          var img = "<img src='" + data.profile_url + "/convert?w=150&h=150&fit=crop'>"
-          $('.profile_picture').html(img);
+          var img = data.profile_url + "/convert?w=150&h=150&fit=crop"
+          $('.profile_picture').attr("src", img);
+        }
+      });
+
+    });
+  });
+
+  $("img.cover_photo").on("click", function(event) {
+    filepicker.pickAndStore({multiple: false, mimetype:"image/*"},
+    {location:"S3"}, function(InkBlobs){
+
+      var url = inkblobToUrl(InkBlobs);
+      // var img = "<img src='" + url + "/convert?w=300&h=300&fit=clip'></img>"
+      // $('.profile_picture').html(img);
+
+      $.ajax({
+        type: "PUT",
+        url: "/users/" + "<%= current_user.id %>" + ".json",
+        data: { user: {cover_url: url }},
+        success: function(data) {
+          console.log(data.cover_url);
+          var img = data.cover_url
+          $('.cover_photo').attr("src", img);
         }
       });
 
@@ -86,6 +103,35 @@
         }
       });
 
+    });
+  });
+
+  $('a#follow').on("click", function(event) {
+    console.log($(event.currentTarget).attr('data-id'));
+    var followee_id = $(event.currentTarget).attr('data-id');
+    $.ajax({
+      url: "/followings",
+      type: "POST",
+      data: { followee_id: followee_id },
+      success: function(data) {
+        console.log(data);
+        $("a#follow").toggle();
+        $('a#unfollow').toggle();
+      }
+    });
+  });
+
+  $('a#unfollow').on("click", function(event) {
+    var follower_id = $(event.currentTarget).attr('data-id');
+    $.ajax({
+      url: "/followings/destroy_following",
+      type: "DELETE",
+      data: { follower_id: follower_id },
+      success: function(data) {
+        console.log($(event.currentTarget));;
+        $("a#follow").toggle();
+        $('a#unfollow').toggle();
+      }
     });
   });
 </script>

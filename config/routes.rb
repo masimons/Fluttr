@@ -19,6 +19,12 @@ Flickr::Application.routes.draw do
     end
   end
 
+  resources :followings, :only => [:create] do
+    collection do
+      delete 'destroy_following'
+    end
+  end
+
   resources :memberships, :only => [:create] do
     collection do
       delete 'destroy_membership'

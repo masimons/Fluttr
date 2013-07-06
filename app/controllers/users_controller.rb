@@ -2,6 +2,7 @@ class UsersController < ApplicationController
 
   def show
     @photos = current_user.photos.order('created_at DESC')
+    @user = User.find(params[:id])
   end
 
   def edit

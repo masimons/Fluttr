@@ -20,6 +20,7 @@
 #  updated_at             :datetime         not null
 #  profile_url            :string(255)
 #  cover_url              :string(255)
+#  username               :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -29,7 +30,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
   attr_accessible :email, :password, :password_confirmation, :remember_me, 
-                  :profile_url, :cover_url
+                  :profile_url, :cover_url, :username
+
+  validates :username, :presence => true, :uniqueness => true
 
   has_many :albums
   has_many :photos, :through => :albums
@@ -41,6 +44,12 @@ class User < ActiveRecord::Base
 
   has_many :friendships
   has_many :friends, :through => :friendships
+
+  has_many :followings, :foreign_key => :followee_id
+  has_many :followers, :through => :followings
+
+  has_many :followings2, :class_name => "Following", :foreign_key => :follower_id
+  has_many :followees, :through => :followings2
 
   has_many :comments
 

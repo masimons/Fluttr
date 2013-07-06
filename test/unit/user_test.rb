@@ -20,6 +20,7 @@
 #  updated_at             :datetime         not null
 #  profile_url            :string(255)
 #  cover_url              :string(255)
+#  username               :string(255)
 #
 
 require 'test_helper'
