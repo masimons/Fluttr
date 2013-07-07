@@ -51,3 +51,24 @@ div.comments {
   width: 30%;
   height: 30%;
 }
+
+#home_background {
+  background: transparent url(http://l.yimg.com/g/images/sohp_hero.jpg.v2) 50% 50% no-repeat;
+  height: 100%;
+}
+
+#home_text {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  width: 64em;
+  height: 36em;
+  margin-left: -32em;
+  margin-top: -18em;
+  text-align: center;
+  vertical-align: middle;
+}
+
+h1.large {
+  font-size: 70pt;
+}

@@ -16,18 +16,18 @@
       thumbnailOverlayType:"text",
       addMargins:"yes",
       loadMoreThumbsButtonOffest:0,
-      thumbnailBaseWidth:100,
-      thumbnailBaseHeight:100,
+      thumbnailBaseWidth:120,
+      thumbnailBaseHeight:120,
       nrOfThumbsToShowOnSet:29,
       horizontalSpaceBetweenThumbnails:6,
       verticalSpaceBetweenThumbnails:6,
-      thumbnailBorderSize:4,
+      thumbnailBorderSize:0,
       thumbnailBorderRadius:0,
       thumbnailOverlayOpacity:.85,
       backgroundColor:"#000000",
       thumbnailOverlayColor:"#000000",
       thumbnailBackgroundColor:"#333333",
-      thumbnailBorderNormalColor:"#FFFFFF",
+      thumbnailBorderNormalColor:"#000000",
       thumbnailBorderSelectedColor:"#FFFFFF",
       //combobox settings
       startAtCategory:1,
@@ -112,10 +112,10 @@
       <% @photos.each do |photo| %>
         <ul>
           <li data-type="iframe" data-width="1200" data-height="800" data-url="<%= photo_url(photo) %>"></li>
-          <li class="grid_thumbnail" data-thumbnail-path="<%= photo.image_url %>/convert?w=200&h=150&fit=scale"></li>
+          <li class="grid_thumbnail" data-thumbnail-path="<%= photo.image_url %>/convert?w=240&h=240&fit=clip"></li>
           <li data-thumbnail-text>
-            <p class="largeLabel">IFRAME SUPPORT!</p>
-            <p class="smallLabel">The lightbox can load a HTML page and display it with ease.</p>
+            <p class="largeLabel"><%= photo.name if photo.name %></p>
+            <p class="smallLabel">by <%= photo.imageable.user %></p>
           </li>
           <li data-info="">
             <p class="mediaDescriptionHeader">IFRAME SUPPORT!</p>
