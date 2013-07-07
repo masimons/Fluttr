@@ -1,5 +1,5 @@
 <div class="show_photo">
-  <center><img src="<%= @photo.image_url %>"></center>
+  <center><img src="<%= @photo.image_url %>/convert?w=720&h=720&fit=clip"></center>
 </div>
 <br>
 
@@ -25,7 +25,7 @@
         <img class="media-object" src="<%= comment.user.profile_url %>/convert?w=50&h=50&fit=clip">
       </a>
       <div class="media-body">
-        <h5 class="media-heading"><%= comment.user.email %></h5>
+        <h5 class="media-heading"><%= comment.user.username %></h5>
         <%= comment.body %>
       </div>
     </div>
@@ -85,7 +85,7 @@
         var user_show = "/users/" + data.user.id;
 
         new_comment = "<div class='media'><a class='pull-left' href='" + user_show + "'><img class='media-object' src='" + profpic
-        + "'></a><div class='media-body'><h5 class='media-heading'>" + data.user.email + "</h5>" + body + "</div></div>"
+        + "'></a><div class='media-body'><h5 class='media-heading'>" + data.user.username + "</h5>" + body + "</div></div>"
 
         $('textarea#comment_body').val('');
         $('.comments').append(new_comment);

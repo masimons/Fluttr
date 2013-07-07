@@ -5,6 +5,7 @@ class PhotosController < ApplicationController
 
   def index
     @albums = current_user.albums
+    render :index, :layout => "photo_grid"
   end
 
   def create
