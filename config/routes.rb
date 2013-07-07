@@ -8,6 +8,9 @@ Flickr::Application.routes.draw do
   end
   
   resources :photos do
+    collection do
+      get 'all', :as => :all
+    end
     resources :comments, :only => [:create, :destroy]
   end
   

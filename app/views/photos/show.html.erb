@@ -1,23 +1,24 @@
 <div class="show_photo">
-  <img src="<%= @photo.image_url %>/convert?w=500&h=500&fit=clip">
+  <center><img src="<%= @photo.image_url %>"></center>
 </div>
 <br>
 
-<a class="favorite" 
-   style="display:<%= 'none' if current_user.favorites.include?(@photo) %>"
-   data-id="<%= @photo.id %>">
-   Add to favorites
-</a>
+<div style="margin-left: 26%;">
+  <a class="favorite" 
+     style="display:<%= 'none' if current_user.favorites.include?(@photo) %>"
+     data-id="<%= @photo.id %>">
+     Add to favorites
+  </a>
 
-<a class="unfavorite" 
-   style="display:<%= 'none' if !current_user.favorites.include?(@photo) %>"
-   data-id="<%= @photo.id %>">
-   Remove from favorites
-</a>
+  <a class="unfavorite" 
+     style="display:<%= 'none' if !current_user.favorites.include?(@photo) %>"
+     data-id="<%= @photo.id %>">
+     Remove from favorites
+  </a>
+</div>
 <br>
 
-
-<div class="comments">
+<div style="margin-left: 26%;" class="comments">
   <% @comments.each do |comment| %>
     <div class="media">
       <a class="pull-left" href="<%= user_path(comment.user) %>">
@@ -32,9 +33,11 @@
 </div>
 <br>
 
+<center>
 <div data-id-photo="<%= @photo.id %>">
   <textarea class="comment" id="comment_body" placeholder="Write a comment"></textarea>
 </div>
+</center>
 <br>
 
 <script type="text/javascript">

@@ -4,6 +4,7 @@ class PhotosController < ApplicationController
   end
 
   def index
+    @albums = current_user.albums
   end
 
   def create
@@ -34,6 +35,7 @@ class PhotosController < ApplicationController
   def show
     @photo = Photo.find(params[:id])
     @comments = @photo.comments.includes(:user)
+    render :show, :layout => "photo_show"
   end
 
   def edit
@@ -49,5 +51,9 @@ class PhotosController < ApplicationController
       flash[:errors] << @photo.errors.full_messages.to_sentence
       render :edit
     end
+  end
+
+  def all
+    @photos = Photo.order('created_at DESC')
   end
 end

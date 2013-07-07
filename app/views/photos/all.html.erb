@@ -1,0 +1,128 @@
+<link rel="stylesheet" type="text/css"  href="/stylesheets/skin_minimal_dark_global.css"></link>
+ 
+<script type="text/javascript" src="/javascripts/FWDGrid.js"></script>
+
+<div id="photo_grid" style="width: 100%;"></div>
+
+<script type="text/javascript">
+  var grid;
+  FWDUtils.onReady(function(){
+    grid = new FWDGrid({    
+      //main settings
+      gridHolderId:"photo_grid",
+      gridPlayListAndSkinId:"playlist",
+      showContextMenu:"yes",
+      //grid settings
+      thumbnailOverlayType:"text",
+      addMargins:"yes",
+      loadMoreThumbsButtonOffest:0,
+      thumbnailBaseWidth:100,
+      thumbnailBaseHeight:100,
+      nrOfThumbsToShowOnSet:29,
+      horizontalSpaceBetweenThumbnails:6,
+      verticalSpaceBetweenThumbnails:6,
+      thumbnailBorderSize:4,
+      thumbnailBorderRadius:0,
+      thumbnailOverlayOpacity:.85,
+      backgroundColor:"#000000",
+      thumbnailOverlayColor:"#000000",
+      thumbnailBackgroundColor:"#333333",
+      thumbnailBorderNormalColor:"#FFFFFF",
+      thumbnailBorderSelectedColor:"#FFFFFF",
+      //combobox settings
+      startAtCategory:1,
+      selectLabel:"SELECT CATEGORIES",
+      allCategoriesLabel:"All Categories",
+      showAllCategories:"no",
+      comboBoxPosition:"topleft",
+      selctorBackgroundNormalColor:"#FFFFFF",
+      selctorBackgroundSelectedColor:"#000000",
+      selctorTextNormalColor:"#000000",
+      selctorTextSelectedColor:"#FFFFFF",
+      buttonBackgroundNormalColor:"#FFFFFF",
+      buttonBackgroundSelectedColor:"#000000",
+      buttonTextNormalColor:"#000000",
+      buttonTextSelectedColor:"#FFFFFF",
+      comboBoxShadowColor:"#000000",
+      comboBoxHorizontalMargins:12,
+      comboBoxVerticalMargins:12,
+      comboBoxCornerRadius:0,
+      //ligtbox settings
+      addLightBoxKeyboardSupport:"yes",
+      showLightBoxNextAndPrevButtons:"yes",
+      showLightBoxZoomButton:"yes",
+      showLightBoxInfoButton:"yes",
+      showLighBoxSlideShowButton:"yes",
+      showLightBoxInfoWindowByDefault:"no",
+      slideShowAutoPlay:"no",
+      lightBoxVideoAutoPlay:"no",
+      lighBoxBackgroundColor:"#000000",
+      lightBoxInfoWindowBackgroundColor:"#FFFFFF",
+      lightBoxItemBorderColor:"#FFFFFF",
+      lightBoxItemBackgroundColor:"#222222",
+      lightBoxMainBackgroundOpacity:.8,
+      lightBoxInfoWindowBackgroundOpacity:.9,
+      lightBoxBorderSize:4,
+      lightBoxBorderRadius:0,
+      lightBoxSlideShowDelay:4
+    });
+  })  
+</script>
+
+  <!-- gallery data list -->
+  <ul id="playlist" style="display: none;">
+
+    <!-- skin TODO: change the paths -->
+    <ul data-skin="">
+      <li data-preloader-path="/load/skin_minimal_dark_square/rotite-30-29.png"></li>
+      <li data-show-more-thumbnails-button-normal-path="/load/skin_minimal_dark_square/showMoreThumbsNormalState.png"></li>
+      <li data-show-more-thumbnails-button-selectsed-path="/load/skin_minimal_dark_square/showMoreThumbsSelectedState.png"></li>
+      <li data-image-icon-path="/load/skin_minimal_dark_square/photoIcon.png"></li>
+      <li data-video-icon-path="/load/skin_minimal_dark_square/videoIcon.png"></li>
+      <li data-link-icon-path="/load/skin_minimal_dark_square/linkIcon.png"></li>
+      <li data-iframe-icon-path="/load/skin_minimal_dark_square/iframeIcon.png"></li>
+      <li data-hand-move-icon-path="/load/skin_minimal_dark_square/handnmove.cur"></li>
+      <li data-hand-drag-icon-path="/load/skin_minimal_dark_square/handgrab.cur"></li>
+      <li data-combobox-down-arrow-icon-normal-path="/load/skin_minimal_dark_square/combobox-down-arrow.png"></li>
+      <li data-combobox-down-arrow-icon-selected-path="/load/skin_minimal_dark_square/combobox-down-arrow-rollover.png"></li>
+      <li data-lightbox-slideshow-preloader-path="/load/skin_minimal_dark_square/slideShowPreloader.png"></li>
+      <li data-lightbox-close-button-normal-path="/load/skin_minimal_dark_square/galleryCloseButtonNormalState.png"></li>
+      <li data-lightbox-close-button-selected-path="/load/skin_minimal_dark_square/galleryCloseButtonSelectedState.png"></li>
+      <li data-lightbox-next-button-normal-path="/load/skin_minimal_dark_square/nextIconNormalState.png"></li>
+      <li data-lightbox-next-button-selected-path="/load/skin_minimal_dark_square/nextIconSelectedState.png"></li>
+      <li data-lightbox-prev-button-normal-path="/load/skin_minimal_dark_square/prevIconNormalState.png"></li>
+      <li data-lightbox-prev-button-selected-path="/load/skin_minimal_dark_square/prevIconSelectedState.png"></li>
+      <li data-lightbox-play-button-normal-path="/load/skin_minimal_dark_square/playButtonNormalState.png"></li>
+      <li data-lightbox-play-button-selected-path="/load/skin_minimal_dark_square/playButtonSelectedState.png"></li>
+      <li data-lightbox-pause-button-normal-path="/load/skin_minimal_dark_square/pauseButtonNormalState.png"></li>
+      <li data-lightbox-pause-button-selected-path="/load/skin_minimal_dark_square/pauseButtonSelectedState.png"></li>
+      <li data-lightbox-maximize-button-normal-path="/load/skin_minimal_dark_square/maximizeButtonNormalState.png"></li>
+      <li data-lightbox-maximize-button-selected-path="/load/skin_minimal_dark_square/maximizeButtonSelectedState.png"></li>
+      <li data-lightbox-minimize-button-normal-path="/load/skin_minimal_dark_square/minimizeButtonNormalState.png"></li>
+      <li data-lightbox-minimize-button-selected-path="/load/skin_minimal_dark_square/minimizeButtonSelectedState.png"></li>
+      <li data-lightbox-info-button-open-normal-path="/load/skin_minimal_dark_square/infoButtonOpenNormalState.png"></li>
+      <li data-lightbox-info-button-open-selected-path="/load/skin_minimal_dark_square/infoButtonOpenSelectedState.png"></li>
+      <li data-lightbox-info-button-close-normal-path="/load/skin_minimal_dark_square/infoButtonCloseNormalPath.png"></li>
+      <li data-lightbox-info-button-close-selected-path="/load/skin_minimal_dark_square/infoButtonCloseSelectedPath.png"></li>
+    </ul> 
+
+    <!-- TODO: next this in another ul for multiple albums -->
+    <!-- TODO change paths, width and height -->
+    <ul data-cat="Category one">
+      <% @photos.each do |photo| %>
+        <ul>
+          <li data-type="iframe" data-width="1200" data-height="800" data-url="<%= photo_url(photo) %>"></li>
+          <li class="grid_thumbnail" data-thumbnail-path="<%= photo.image_url %>/convert?w=200&h=150&fit=scale"></li>
+          <li data-thumbnail-text>
+            <p class="largeLabel">IFRAME SUPPORT!</p>
+            <p class="smallLabel">The lightbox can load a HTML page and display it with ease.</p>
+          </li>
+          <li data-info="">
+            <p class="mediaDescriptionHeader">IFRAME SUPPORT!</p>
+            <p class="mediaDescriptionText">The lightbox can load a HTML page and display it with ease. All you have to do is to include the link of the HTML page and the lighbox will display it. The HTML page size (width and height) can be easily set.</p>
+          </li>
+        </ul>
+      <% end %>
+    </ul>
+
+  </ul>

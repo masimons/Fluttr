@@ -47,6 +47,7 @@ div.comments {
   margin-left: 25%;
 }
 
-/*div.show_photo {
-  position: center;
-}*/
+.grid_thumbnail {
+  width: 30%;
+  height: 30%;
+}
