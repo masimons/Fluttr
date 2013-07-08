@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130706041249) do
+ActiveRecord::Schema.define(:version => 20130708185649) do
 
   create_table "albums", :force => true do |t|
     t.string   "title"
@@ -84,6 +84,8 @@ ActiveRecord::Schema.define(:version => 20130706041249) do
     t.boolean  "public",         :default => true
     t.integer  "imageable_id"
     t.string   "imageable_type"
+    t.float    "lat"
+    t.float    "lng"
   end
 
   create_table "taggings", :force => true do |t|

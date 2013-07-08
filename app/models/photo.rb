@@ -10,12 +10,15 @@
 #  public         :boolean          default(TRUE)
 #  imageable_id   :integer
 #  imageable_type :string(255)
+#  lat            :float
+#  lng            :float
 #
 
 class Photo < ActiveRecord::Base
   # before_validation :add_album
 
-  attr_accessible :name, :album_id, :image_url, :public, :imageable_id, :imageable_type
+  attr_accessible :name, :album_id, :image_url, :public, :imageable_id, 
+                  :imageable_type, :lat, :lng
 
   # validates :name, :presence => true
 

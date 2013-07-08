@@ -25,9 +25,78 @@
     var map = new google.maps.Map(document.getElementById("map-canvas"),
       mapOptions);
 
+    // Get array of photos
+    var coords = []
+
+    $.ajax({
+      url: "/map/world_map.json",
+      type: "GET",
+      success: function(data) {
+        console.log(data);
+        for (var i=0; i<data.length; i++) {
+          coords.push([data[i].lat, data[i].lng]);
+        }
+        console.log(coords);
+        coords = _.uniq(coords); // write own
+        console.log(coords);
+
+        // console.log([coords[1][0], coords[1][1]]);
+
+        var marker, j;
+        for (j=0; j<coords.length; j++) {
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(coords[j][0], coords[j][1]),
+            map: map
+          });
+
+          google.maps.event.addListener(marker, "click", function(a) {
+            // console.log(a.latLng.jb); //the latLng of the marker
+            // console.log(a.latLng.kb); 
+            $.ajax({
+              url: '/map/coords_to_photos.json',
+              type: 'GET',
+              data: { lat: a.latLng.jb, lng: a.latLng.kb },
+              success: function(data) {
+                console.log(data[0].image_url);
+                var str = ''
+                _.each(data, function(photo) {
+                  console.log(photo.image_url)
+                  str += "<div><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></div>"
+                })
+                // str = "<div><img src='" + data.image_url + "'></div>"
+                $('#photos').html(str);
+              }
+            })
+          })
+
+        }
+      }
+    })
+
+    // var displayPhotos = function(a) {
+    //   console.log(a);
+    // }
+
+    // var marker, i;
+
+    // for (i = 0; i < locations.length; i++) {  
+    //   marker = new google.maps.Marker({
+    //     position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+    //     map: map
+    //   });
+
+    //   google.maps.event.addListener(marker, 'click', (function(marker, i) {
+    //     return function() {
+    //       infowindow.setContent(locations[i][0]);
+    //       infowindow.open(map, marker);
+    //     }
+    //   })(marker, i));
+    // }
+
     google.maps.event.addListener(map, "click", function(event) {
-      console.log(event.latLng);
-      
+      // console.log(event);
+      // console.log(event.latLng);
+      // console.log(event.latLng.jb)
     });
   }
 

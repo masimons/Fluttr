@@ -50,6 +50,7 @@ Flickr::Application.routes.draw do
   resource :map, :only => [] do
     collection do
       get 'world_map', :as => :world
+      get 'coords_to_photos'
     end
   end
 

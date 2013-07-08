@@ -10,6 +10,8 @@
 #  public         :boolean          default(TRUE)
 #  imageable_id   :integer
 #  imageable_type :string(255)
+#  lat            :float
+#  lng            :float
 #
 
 require 'test_helper'

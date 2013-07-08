@@ -71,8 +71,9 @@
       mapOptions);
 
     google.maps.event.addListener(map, "click", function(event){
-      console.log(event.latLng);
+      console.log(Math.round(event.latLng.jb));
       $('#myModal').modal();
+      //hidden field with latLng
       // placeMarker(event.latLng, map);
     });
   }
