@@ -23,11 +23,11 @@
       <!-- Create a hidden div for each album and fill it with its photos and checkboxes -->
       
         <% album.photos.each do |photo| %>
-          <div class="photo" id="photo<%= photo.id %>" data-id="<%= photo.id %>" style="display:none;">
+          <div class="photo album<%= album.id %>" id="photo<%= photo.id %>" data-id="<%= photo.id %>" style="display:none;">
             <div style="float:left; text-align:center; padding-right:25px;">
               <label>
                 <img src="<%= photo.image_url %>/convert?w=100&h=100&fit=clip"><br>
-                <input type="checkbox" id="photo<%= photo.id %>" name="photo" value="<%= photo.id %>">
+                <input type="checkbox" id="photo<%= photo.id %>" name="photo_ids[]" value="<%= photo.id %>">
               </label>
             </div>
           </div>
@@ -71,7 +71,7 @@
       mapOptions);
 
     google.maps.event.addListener(map, "click", function(event){
-      // console.log(event);
+      console.log(event.latLng);
       $('#myModal').modal();
       // placeMarker(event.latLng, map);
     });
@@ -94,7 +94,7 @@
     console.log(event.currentTarget);
     var album_num = $(event.currentTarget).attr('data-id');
     $('.album').hide();
-    $('.photo').show();
+    $('.album' + album_num).show();
     $('.go_back').show();
   })
 
