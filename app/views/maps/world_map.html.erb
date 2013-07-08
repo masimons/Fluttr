@@ -61,8 +61,8 @@
                 var str = ''
                 _.each(data, function(photo) {
                   console.log(photo.id)
-                  // str += "<div><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></div>"
-                  str += "<div><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
+                  // str += "<div><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
+                  str += "<div class='worldmap_photos'><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
                 })
                 $('#photos').html(str);
               }

@@ -76,3 +76,8 @@ h1.large {
 .show_inline {
   display: inline;
 }
+
+.worldmap_photos {
+  float: left;
+  margin: 10px;
+}
