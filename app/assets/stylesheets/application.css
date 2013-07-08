@@ -72,3 +72,7 @@ div.comments {
 h1.large {
   font-size: 70pt;
 }
+
+.show_inline {
+  display: inline;
+}
