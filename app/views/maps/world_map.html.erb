@@ -60,10 +60,10 @@
                 console.log(data[0].image_url);
                 var str = ''
                 _.each(data, function(photo) {
-                  console.log(photo.image_url)
-                  str += "<div><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></div>"
+                  console.log(photo.id)
+                  // str += "<div><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></div>"
+                  str += "<div><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
                 })
-                // str = "<div><img src='" + data.image_url + "'></div>"
                 $('#photos').html(str);
               }
             })
