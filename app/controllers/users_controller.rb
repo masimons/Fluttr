@@ -17,4 +17,8 @@ class UsersController < ApplicationController
     end
   end
 
+  def mymap
+    
+  end
+
 end
