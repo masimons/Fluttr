@@ -47,5 +47,11 @@ Flickr::Application.routes.draw do
     end
   end
 
+  resource :map, :only => [] do
+    collection do
+      get 'world_map', :as => :world
+    end
+  end
+
   root :to => "static_pages#home"
 end
