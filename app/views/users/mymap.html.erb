@@ -6,7 +6,7 @@
     <h3 id="myModalLabel">Choose photos:</h3>
   </div>
 
-  <form action="#" method="post">
+  <form action="/map/set_coord_attrs.json" method="post">
   <div class="modal-body">
     <% @albums.each do |album| %>
       <% next if album.photos.empty? %>
@@ -29,6 +29,8 @@
                 <img src="<%= photo.image_url %>/convert?w=100&h=100&fit=clip"><br>
                 <input type="checkbox" id="photo<%= photo.id %>" name="photo_ids[]" value="<%= photo.id %>">
               </label>
+              <input type="hidden" value="put" name="_method">
+              <input id="hidden_coords" type="hidden" name="coords" value="">
             </div>
           </div>
 
@@ -71,9 +73,11 @@
       mapOptions);
 
     google.maps.event.addListener(map, "click", function(event){
-      console.log(Math.round(event.latLng.jb));
+      var coords = [Math.round(event.latLng.jb), Math.round(event.latLng.kb)]
+      console.log(coords);
       $('#myModal').modal();
       //hidden field with latLng
+      $('#hidden_coords').attr('value', coords);
       // placeMarker(event.latLng, map);
     });
   }

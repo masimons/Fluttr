@@ -51,6 +51,7 @@ Flickr::Application.routes.draw do
     collection do
       get 'world_map', :as => :world
       get 'coords_to_photos'
+      put 'set_coord_attrs'
     end
   end
 

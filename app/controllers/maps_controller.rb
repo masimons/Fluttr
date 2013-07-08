@@ -15,4 +15,13 @@ class MapsController < ApplicationController
     render :json => @photos
   end
 
+  def set_coord_attrs
+    lat = params[:coords][0]
+    lng = params[:coords][1]
+    @photos = params[:photo_ids].each do |photo_id|
+      Photo.find(photo_id).update_attributes(:lat => lat, :lng => lng)
+    end
+    render "users/mymap"
+  end
+
 end
