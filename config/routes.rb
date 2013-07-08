@@ -7,7 +7,11 @@ Flickr::Application.routes.draw do
     end
     resources :favorites, :only => [:index]
     resources :groups, :only => [:index]
-    resources :albums
+    resources :albums do
+      member do
+        get 'album_photos'
+      end
+    end
   end
   
   resources :photos do

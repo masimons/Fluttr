@@ -31,4 +31,10 @@ class AlbumsController < ApplicationController
     end
   end
 
+  def album_photos
+    @album = Album.find(params[:id])
+    @photos = @album.photos
+    render :json => @photos
+  end
+
 end

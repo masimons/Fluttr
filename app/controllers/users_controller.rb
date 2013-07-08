@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def mymap
-    
+    @albums = current_user.albums #(:includes => :photos)
   end
 
 end
