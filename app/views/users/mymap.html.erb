@@ -80,9 +80,9 @@
       // var coords = [Math.round(event.latLng.jb), Math.round(event.latLng.kb)]
       console.log((event.latLng.jb));
       // $('#hidden_lat').attr('value', Math.round(event.latLng.jb));
-      $(event.latLng.jb);
+      $('#hidden_lat').val(Math.round(event.latLng.jb * 1000)/1000);
       // $('#hidden_lng').attr('value', Math.round(event.latLng.kb));
-      $('#hidden_lng').val(event.latLng.kb);
+      $('#hidden_lng').val(Math.round(event.latLng.kb * 1000)/1000);
       $('#myModal').modal();
       //hidden field with latLng
       

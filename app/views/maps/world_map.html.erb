@@ -50,13 +50,18 @@
           });
 
           google.maps.event.addListener(marker, "click", function(a) {
-            // console.log(a.latLng.jb); //the latLng of the marker
-            // console.log(a.latLng.kb); 
+            console.log(a.latLng.jb); //the latLng of the marker
+            console.log(a.latLng.kb);
+            var rounded_lat = Math.round(a.latLng.jb*1000)/1000
+            console.log(rounded_lat); //the latLng of the marker
+            var rounded_lng = Math.round(a.latLng.kb*1000)/1000
+            console.log(rounded_lng); 
             $.ajax({
               url: '/map/coords_to_photos.json',
               type: 'GET',
-              data: { lat: a.latLng.jb, lng: a.latLng.kb },
+              data: { lat: rounded_lat, lng: rounded_lng },
               success: function(data) {
+                console.log(data);
                 console.log(data[0].image_url);
                 var str = ''
                 _.each(data, function(photo) {
