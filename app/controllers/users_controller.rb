@@ -18,8 +18,9 @@ class UsersController < ApplicationController
   end
 
   def mymap
+    # TODO: change current_user to User.find(params[:id])
     @albums = current_user.albums #(:includes => :photos)
-    @photos = Photo.where('lat IS NOT NULL')
+    @photos = current_user.photos.where('lat IS NOT NULL')
     respond_to do |format|
       format.html { render :mymap }
       format.json { render :json => @photos }

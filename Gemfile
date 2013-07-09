@@ -31,6 +31,8 @@ gem 'pg'
 
 gem 'gritter'
 
+gem 'kaminari'
+
 # gem 'nokogiri'
 # gem 'sunspot_rails'
 

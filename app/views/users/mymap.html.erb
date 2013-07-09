@@ -89,10 +89,12 @@
     });
 
     $.ajax({
-      url: "/users/" + current_user.id + "/mymap.json",
+      url: "/users/" + <%= current_user.id %> + "/mymap.json",
       type: "GET",
       success: function(data) {
         console.log(data);
+
+        var coords = []
         for (var i=0; i<data.length; i++) {
           coords.push([data[i].lat, data[i].lng]);
         }
@@ -125,7 +127,7 @@
                   // str += "<div><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
                   str += "<div class='worldmap_photos'><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
                 })
-                $('#photos').html(str);
+                $('#my-photos').html(str);
               }
             })
           })
