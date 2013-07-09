@@ -2,11 +2,11 @@
 
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Choose photos:</h3>
   </div>
 
-  <form action="/map/set_coord_attrs" method="post">
+  <form action="/map/set_coord_attrs.json" method="post">
   <div class="modal-body">
     <% @albums.each do |album| %>
       <% next if album.photos.empty? %>
@@ -16,7 +16,7 @@
         </div>
         <div>
           <!-- <img src='https://www.filepicker.io/api/file/LE6Na8FtSRCyK4HUyiLW/convert?w=50&h=50&fit=clip'> -->
-          <img src='<%= album.photos.first.image_url %>/convert?w=100&h=100&fit=clip'></img>
+          <img src='<%= album.photos.first.image_url %>/convert?w=100&h=100&fit=clip'>
         </div>
       </div>
 
@@ -26,21 +26,17 @@
           <div class="photo album<%= album.id %>" id="photo<%= photo.id %>" data-id="<%= photo.id %>" style="display:none;">
             <div style="float:left; text-align:center; padding-right:25px;">
               <label>
-                <img src="<%= photo.image_url %>/convert?w=100&h=100&fit=clip"></img><br>
+                <img src="<%= photo.image_url %>/convert?w=100&h=100&fit=clip"><br>
                 <input type="checkbox" id="photo<%= photo.id %>" name="photo_ids[]" value="<%= photo.id %>">
               </label>
+              <input type="hidden" value="put" name="_method">
+              <input id="hidden_coords" type="hidden" name="coords" value="">
             </div>
           </div>
 
         <% end %>
     <% end %>
   </div>
-  <input type="hidden"
-                name="authenticity_token"
-                value="<%= form_authenticity_token %>" />
-  <input type="hidden" value="put" name="_method" />
-  <input id="hidden_lat" type="hidden" name="photo[lat]" />
-  <input id="hidden_lng" type="hidden" name="photo[lng]" />
   <div class="modal-footer">
     <button class="btn go_back" style="display: none;">Back</button>
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -77,15 +73,11 @@
       mapOptions);
 
     google.maps.event.addListener(map, "click", function(event){
-      // var coords = [Math.round(event.latLng.jb), Math.round(event.latLng.kb)]
-      console.log((event.latLng.jb));
-      // $('#hidden_lat').attr('value', Math.round(event.latLng.jb));
-      $(event.latLng.jb);
-      // $('#hidden_lng').attr('value', Math.round(event.latLng.kb));
-      $('#hidden_lng').val(event.latLng.kb);
+      var coords = [Math.round(event.latLng.jb), Math.round(event.latLng.kb)]
+      console.log(coords);
       $('#myModal').modal();
       //hidden field with latLng
-      
+      $('#hidden_coords').attr('value', coords);
       // placeMarker(event.latLng, map);
     });
   }

@@ -3,7 +3,11 @@
 </div>
 <br>
 
-<div style="margin-left: 26%;">
+<div style="margin-left: 65%; display: inline;">
+  <em><%= @photo.name %></em>, by <%= link_to @photo.imageable.user.username, user_path(@photo.imageable.user) %>
+</div>
+
+<div style="margin-left: 30%;">
   <a class="favorite" 
      style="display:<%= 'none' if current_user.favorites.include?(@photo) %>"
      data-id="<%= @photo.id %>">
@@ -18,7 +22,7 @@
 </div>
 <br>
 
-<div style="margin-left: 26%;" class="comments">
+<div style="margin-left: 30%;" class="comments">
   <% @comments.each do |comment| %>
     <div class="media">
       <a class="pull-left" href="<%= user_path(comment.user) %>">

@@ -4,6 +4,7 @@ Flickr::Application.routes.draw do
   resources :users, :only => [:show, :edit, :update] do
     member do 
       get 'mymap'
+      get 'feed'
     end
     resources :favorites, :only => [:index]
     resources :groups, :only => [:index]

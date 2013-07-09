@@ -16,8 +16,8 @@
       thumbnailOverlayType:"text",
       addMargins:"yes",
       loadMoreThumbsButtonOffest:0,
-      thumbnailBaseWidth:120,
-      thumbnailBaseHeight:120,
+      thumbnailBaseWidth:60,
+      thumbnailBaseHeight:60,
       nrOfThumbsToShowOnSet:29,
       horizontalSpaceBetweenThumbnails:6,
       verticalSpaceBetweenThumbnails:6,
@@ -115,7 +115,7 @@
           <li class="grid_thumbnail" data-thumbnail-path="<%= photo.image_url %>/convert?w=240&h=240&fit=clip"></li>
           <li data-thumbnail-text>
             <p class="largeLabel"><%= photo.name if photo.name %></p>
-            <p class="smallLabel">by <%= photo.imageable.user %></p>
+            <p class="smallLabel">by <%#= photo.imageable.user %></p>
           </li>
           <li data-info="">
             <p class="mediaDescriptionHeader">IFRAME SUPPORT!</p>

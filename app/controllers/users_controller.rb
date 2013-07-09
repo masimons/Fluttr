@@ -21,4 +21,8 @@ class UsersController < ApplicationController
     @albums = current_user.albums #(:includes => :photos)
   end
 
+  def feed
+    @posts = current_user.followees(:includes => :photos)
+  end
+
 end

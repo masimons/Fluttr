@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130708185649) do
+ActiveRecord::Schema.define(:version => 20130709033125) do
 
   create_table "albums", :force => true do |t|
     t.string   "title"
@@ -87,6 +87,9 @@ ActiveRecord::Schema.define(:version => 20130708185649) do
     t.float    "lat"
     t.float    "lng"
   end
+
+  add_index "photos", ["lat"], :name => "index_photos_on_lat"
+  add_index "photos", ["lng"], :name => "index_photos_on_lng"
 
   create_table "taggings", :force => true do |t|
     t.integer  "photo_id"
