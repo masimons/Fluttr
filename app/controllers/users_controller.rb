@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
   def show
-    @photos = current_user.photos.order('created_at DESC')
     @user = User.find(params[:id])
+    @photos = @user.photos.order('created_at DESC')
   end
 
   def edit
@@ -28,7 +28,15 @@ class UsersController < ApplicationController
   end
 
   def feed
-    @posts = current_user.followees(:includes => :photos)
+    # grab friends' photos in desc order
+    @followees = current_user.followees.includes(:photos).order('created_at DESC').includes(:comments) #.includes(:user)
+    @photos = []
+    @followees.each do |followee| 
+      followee.photos.each do |photo|
+        @photos << photo
+      end
+    end
+    @photos = (@photos.sort_by { |photo| photo.created_at }).reverse
   end
 
 end

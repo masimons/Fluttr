@@ -60,4 +60,8 @@ class User < ActiveRecord::Base
     self.albums.create!(:title => "Other")
   end
 
+  def recent_friends_photos
+    
+  end
+
 end

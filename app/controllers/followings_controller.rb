@@ -8,7 +8,7 @@ class FollowingsController < ApplicationController
   end
 
   def destroy_following
-    @following = Following.where(:follower_id => params[:follower_id], :followee_id => current_user.id).first
+    @following = Following.where(:followee_id => params[:followee_id], :follower_id => current_user.id).first
     @following.destroy
     render :json => @following
   end

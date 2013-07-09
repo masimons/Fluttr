@@ -1,20 +1,21 @@
 <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
 
-<img class="cover_photo" src="<%= current_user.cover_url %>">
+<img class="cover_photo" src="<%= @user.cover_url %>">
 
-<img class="profile_picture" src="<%= current_user.profile_url %>/convert?w=150&h=150&fit=crop">
+<img class="profile_picture" src="<%= @user.profile_url %>/convert?w=150&h=150&fit=crop">
 
-<h2 style="display: inline;" class="profile_username"><%= current_user.username %>'s Profile</h2>
+<h2 style="display: inline;" class="profile_username"><%= @user.username %>'s Profile</h2>
 
-<a class="pull-right" id="follow" style="display:<%= 'none' if current_user.followees.include?(@user) %>" data-id="<%= @user.id %>">
+
+<a class="pull-right" id="follow" style="display:<%= 'none' if current_user.followees.include?(@user) || current_user == @user %>" data-id="<%= @user.id %>">
   <button class="btn btn-primary btn-large">Follow</button></a>
-<a class="pull-right" id="unfollow" style="display:<%= 'none' if !current_user.followees.include?(@user) %>" data-id="<%= @user.id %>">
+<a class="pull-right" id="unfollow" style="display:<%= 'none' if !current_user.followees.include?(@user) || current_user == @user %>" data-id="<%= @user.id %>">
   <button class="btn btn-primary btn-large">Unfollow</button></a>
 
 <h3>Recent Photos</h3>
 
 <div>
-  <% Photo.all.each do |photo| %>
+  <% @photos.each do |photo| %>
     <div>
       <a href="<%= photo_path(photo) %>"><img src="<%=photo.image_url %>/convert?w=300&h=300&fit=clip"></img></a>
     </div>
@@ -122,11 +123,11 @@
   });
 
   $('a#unfollow').on("click", function(event) {
-    var follower_id = $(event.currentTarget).attr('data-id');
+    var followee_id = $(event.currentTarget).attr('data-id');
     $.ajax({
       url: "/followings/destroy_following",
       type: "DELETE",
-      data: { follower_id: follower_id },
+      data: { followee_id: followee_id },
       success: function(data) {
         console.log($(event.currentTarget));;
         $("a#follow").toggle();

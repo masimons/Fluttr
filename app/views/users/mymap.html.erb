@@ -92,7 +92,6 @@
       url: "/users/" + <%= current_user.id %> + "/mymap.json",
       type: "GET",
       success: function(data) {
-        console.log(data);
 
         var coords = []
         for (var i=0; i<data.length; i++) {
@@ -108,23 +107,15 @@
           });
 
           google.maps.event.addListener(marker, "click", function(a) {
-            console.log(a.latLng.jb); //the latLng of the marker
-            console.log(a.latLng.kb);
             var rounded_lat = Math.round(a.latLng.jb*1000)/1000
-            console.log(rounded_lat); //the latLng of the marker
-            var rounded_lng = Math.round(a.latLng.kb*1000)/1000
-            console.log(rounded_lng); 
+            var rounded_lng = Math.round(a.latLng.kb*1000)/1000 
             $.ajax({
               url: '/map/coords_to_photos.json',
               type: 'GET',
               data: { lat: rounded_lat, lng: rounded_lng },
               success: function(data) {
-                console.log(data);
-                console.log(data[0].image_url);
                 var str = ''
                 _.each(data, function(photo) {
-                  console.log(photo.id)
-                  // str += "<div><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
                   str += "<div class='worldmap_photos'><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
                 })
                 $('#my-photos').html(str);

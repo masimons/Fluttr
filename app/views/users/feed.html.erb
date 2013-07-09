@@ -1,0 +1,9 @@
+<%# @followees.each do |followee| %>
+  <%# followee.photos.each do |photo| %>
+    <!-- <a href="<%#= photo_path(photo) %>"><img src="<%#= photo.image_url %>"></image></a> -->
+  <%# end %>
+<%# end %>
+
+<% @photos.each do |photo| %>
+  <a href="<%= photo_path(photo) %>"><img src="<%= photo.image_url %>"></image></a>
+<% end %>
