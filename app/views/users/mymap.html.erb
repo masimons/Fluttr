@@ -1,4 +1,5 @@
 <div id="map-canvas"></div>
+<div id="my-photos"></div>
 
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
@@ -85,17 +86,55 @@
       $('#hidden_lng').val(Math.round(event.latLng.kb * 1000)/1000);
       $('#myModal').modal();
       //hidden field with latLng
-      
-      // placeMarker(event.latLng, map);
     });
+
+    $.ajax({
+      url: "/users/" + current_user.id + "/mymap.json",
+      type: "GET",
+      success: function(data) {
+        console.log(data);
+        for (var i=0; i<data.length; i++) {
+          coords.push([data[i].lat, data[i].lng]);
+        }
+        coords = _.uniq(coords); // write own
+
+        var marker, j;
+        for (j=0; j<coords.length; j++) {
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(coords[j][0], coords[j][1]),
+            map: map
+          });
+
+          google.maps.event.addListener(marker, "click", function(a) {
+            console.log(a.latLng.jb); //the latLng of the marker
+            console.log(a.latLng.kb);
+            var rounded_lat = Math.round(a.latLng.jb*1000)/1000
+            console.log(rounded_lat); //the latLng of the marker
+            var rounded_lng = Math.round(a.latLng.kb*1000)/1000
+            console.log(rounded_lng); 
+            $.ajax({
+              url: '/map/coords_to_photos.json',
+              type: 'GET',
+              data: { lat: rounded_lat, lng: rounded_lng },
+              success: function(data) {
+                console.log(data);
+                console.log(data[0].image_url);
+                var str = ''
+                _.each(data, function(photo) {
+                  console.log(photo.id)
+                  // str += "<div><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
+                  str += "<div class='worldmap_photos'><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
+                })
+                $('#photos').html(str);
+              }
+            })
+          })
+
+        }
+      }
+    })
   }
 
-  function placeMarker(location, map) {
-    var marker = new google.maps.Marker({
-        position: location,
-        map: map
-    });
-  }
 
   $('button.go_back').on('click', function(event) {
     event.preventDefault();

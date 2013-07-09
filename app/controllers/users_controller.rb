@@ -19,6 +19,11 @@ class UsersController < ApplicationController
 
   def mymap
     @albums = current_user.albums #(:includes => :photos)
+    @photos = Photo.where('lat IS NOT NULL')
+    respond_to do |format|
+      format.html { render :mymap }
+      format.json { render :json => @photos }
+    end
   end
 
   def feed

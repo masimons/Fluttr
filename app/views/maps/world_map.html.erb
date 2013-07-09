@@ -36,11 +36,7 @@
         for (var i=0; i<data.length; i++) {
           coords.push([data[i].lat, data[i].lng]);
         }
-        console.log(coords);
         coords = _.uniq(coords); // write own
-        console.log(coords);
-
-        // console.log([coords[1][0], coords[1][1]]);
 
         var marker, j;
         for (j=0; j<coords.length; j++) {
