@@ -61,7 +61,13 @@ class User < ActiveRecord::Base
   end
 
   def recent_friends_photos
-    
+    photos = []
+    self.followees.each do |followee| 
+      followee.photos.each do |photo|
+        photos << photo
+      end
+    end
+    photos = (photos.sort_by { |photo| photo.created_at }).reverse
   end
 
 end

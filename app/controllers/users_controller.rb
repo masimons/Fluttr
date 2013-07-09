@@ -19,8 +19,9 @@ class UsersController < ApplicationController
 
   def mymap
     # TODO: change current_user to User.find(params[:id])
-    @albums = current_user.albums #(:includes => :photos)
-    @photos = current_user.photos.where('lat IS NOT NULL')
+    @user = User.find(params[:id])
+    @albums = @user.albums #(:includes => :photos)
+    @photos = @user.photos.where('lat IS NOT NULL')
     respond_to do |format|
       format.html { render :mymap }
       format.json { render :json => @photos }
@@ -30,13 +31,7 @@ class UsersController < ApplicationController
   def feed
     # grab friends' photos in desc order
     @followees = current_user.followees.includes(:photos).order('created_at DESC').includes(:comments) #.includes(:user)
-    @photos = []
-    @followees.each do |followee| 
-      followee.photos.each do |photo|
-        @photos << photo
-      end
-    end
-    @photos = (@photos.sort_by { |photo| photo.created_at }).reverse
+    @photos = current_user.recent_friends_photos
   end
 
 end

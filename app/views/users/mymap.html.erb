@@ -89,7 +89,7 @@
     });
 
     $.ajax({
-      url: "/users/" + <%= current_user.id %> + "/mymap.json",
+      url: "/users/" + <%= @user.id %> + "/mymap.json",
       type: "GET",
       success: function(data) {
 
@@ -127,6 +127,8 @@
       }
     })
   }
+// str += "<div class='worldmap_photos'><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
+// <iframe src="/photos/" + photo.id></iframe>
 
 
   $('button.go_back').on('click', function(event) {

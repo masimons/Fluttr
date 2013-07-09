@@ -121,8 +121,8 @@
               <p class="smallLabel">by <%= photo.imageable.user.username %></p>
             </li>
             <li data-info="">
-              <p class="mediaDescriptionHeader">IFRAME SUPPORT!</p>
-              <p class="mediaDescriptionText">The lightbox can load a HTML page and display it with ease. All you have to do is to include the link of the HTML page and the lighbox will display it. The HTML page size (width and height) can be easily set.</p>
+              <p class="mediaDescriptionHeader">Tags</p>
+              <p class="mediaDescriptionText"><%= photo.tags.first.name unless photo.tags.empty?%></p>
             </li>
           </ul>
         <% end %>
