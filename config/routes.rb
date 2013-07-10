@@ -22,7 +22,11 @@ Flickr::Application.routes.draw do
     resources :comments, :only => [:create, :destroy]
   end
   
-  resources :tags
+  resources :tags do
+    collection do 
+      get 'search_tags', :as => :search
+    end
+  end
 
   resources :favorites, :only => [:create] do
     collection do

@@ -36,7 +36,12 @@ class GroupsController < ApplicationController
   end
 
   def all
-    @groups = Group.order('created_at DESC') # where(:public => true)
+    if params['search_word']
+      @groups = Group.search(name: params['search_word'])
+      render :all, :layout => false
+    else
+      @groups = Group.order('created_at DESC') # where(:public => true)
+    end
   end
 
   def show
@@ -49,5 +54,5 @@ class GroupsController < ApplicationController
     @group.destroy
     redirect_to user_groups_path(current_user)
   end
-
+  
 end

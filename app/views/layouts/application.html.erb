@@ -45,6 +45,33 @@
     </div>
   </div>
 
+<script>
+  $('#search_tags').on('keypress', function(event) {
+
+    if (event.keyCode == 13) {
+      var search_word = $(event.currentTarget).val();
+      $.ajax({
+        url: '/tags/search_tags.json',
+        type: 'GET',
+        data: { search_word: search_word },
+        success: function(data) {
+          console.log(data);
+          var str = ''
+          if (!!data && data.length !== 0) {
+            _.each(data, function(photo) {
+              str += "<a href='/photos/" + photo.id + "'><img style='float:left; padding: 10px;' src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></img></a>"
+            })
+          } else {
+            str += "No results match '" + search_word + "'"
+          }
+          $('#yield').html(str);
+          
+        }
+      })
+    }
+  })
+</script>
+
   
 </body>
 </html>

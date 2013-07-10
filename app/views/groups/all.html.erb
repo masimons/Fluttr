@@ -1,25 +1,36 @@
+<div class="pull-right">
+  <label>Search groups:
+    <br>
+    <input class="search_groups" type="text">
+  </label>
+</div>
+
 <h2>All groups</h2>
 
-<div>
-  <% @groups.each do |group| %>
-    <div class="media">
-    <a class="pull-left" href="<%= group_path(group) %>">
-      <img class="media-object" src="<%= group.image_url %>/convert?w=100&h=100&fit=clip">
-    </a>
-    <div class="media-body">
-      <h4 style="display:inline" class="media-heading"><a class="white_link" href="<%= group_path(group) %>"><%= group.name %></a></h4>
+<div id="groups">
+  <% if !@groups.empty? %>
+    <% @groups.each do |group| %>
+      <div class="media">
+        <a class="pull-left" href="<%= group_path(group) %>">
+          <img class="media-object" src="<%= group.image_url %>/convert?w=100&h=100&fit=clip">
+        </a>
+        <div class="media-body">
+          <h4 style="display:inline" class="media-heading"><a class="white_link" href="<%= group_path(group) %>"><%= group.name %></a></h4>
 
-        <a id="join<%= group.id %>" class="join" style="display:<%= 'none' if group.members.include?(current_user) %>" data-id="<%= group.id %>">Join</a></li>
-        <a id="leave<%= group.id %>" class="leave" style="display:<%= 'none' if !group.members.include?(current_user) %>" data-id="<%= group.id %>">Leave Group</a></li>
+          <a id="join<%= group.id %>" class="join" style="display:<%= 'none' if group.members.include?(current_user) %>" data-id="<%= group.id %>">Join</a></li>
+          <a id="leave<%= group.id %>" class="leave" style="display:<%= 'none' if !group.members.include?(current_user) %>" data-id="<%= group.id %>">Leave Group</a></li>
 
-      <p><%= group.description %></p>
-   
-      <!-- Nested media object -->
-  <!--     <div class="media">
-        
-      </div> -->
-    </div>
-  </div>
+          <p><%= group.description %></p>
+     
+        <!-- Nested media object -->
+    <!--     <div class="media">
+          
+        </div> -->
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    No results matched your search.
   <% end %>
 </div>
 
@@ -53,5 +64,20 @@
       }
     });
   });
+
+  $('.search_groups').on('keypress', function(event) {
+    if (event.keyCode == 13) {
+      var search_word = $(event.currentTarget).val();
+      $.ajax({
+        url: '/groups/all',
+        type: 'GET',
+        data: { search_word: search_word },
+        success: function(data) {
+          console.log(data);
+          $('#yield').html(data);
+        }
+      })
+    }
+  })
 </script>
 

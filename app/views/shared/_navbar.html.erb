@@ -14,6 +14,12 @@
       </ul>
       <ul class="nav pull-right">
         <li>
+          <li><label>Search tags:<input type="text" 
+                                        style="margin-top:10px;" 
+                                        placeholder="ex: France, nature, architecture..." id="search_tags">
+              </label>
+          </li>
+          <li class="divider-vertical"></li>
           <li><%= link_to "Log out", destroy_user_session_path, :method => :delete %></li>
         </li>
       </ul>

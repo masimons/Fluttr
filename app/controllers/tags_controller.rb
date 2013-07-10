@@ -23,4 +23,9 @@ class TagsController < ApplicationController
     end
   end
 
+  def search_tags
+    @photos = Tag.fuzzy_search(name: params["search_word"]).map { |tag| tag.photos }.flatten!
+    render :json => @photos
+  end
+
 end

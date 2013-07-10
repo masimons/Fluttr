@@ -57,7 +57,6 @@
   });
 
   $('.name_field').on("keypress", function(event) {
-    // console.log($(event.currentTarget).val());
     if (event.which === 13) {
       var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
       var value = $(event.currentTarget).val();
