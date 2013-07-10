@@ -33,6 +33,10 @@ gem 'gritter'
 
 gem 'kaminari'
 
+# gem 'textacular', :git => "git://github.com/textacular/textacular.git", require:['textacular/rails', 'textacular/tasks']
+gem 'textacular', :git => "git://github.com/textacular/textacular.git", 
+  require:   ['textacular/postgres_module_installer', 'textacular/rails', 'textacular/tasks']
+
 # gem 'nokogiri'
 # gem 'sunspot_rails'
 
