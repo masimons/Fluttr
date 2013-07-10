@@ -61,13 +61,19 @@ class User < ActiveRecord::Base
   end
 
   def recent_friends_photos
-    photos = []
-    self.followees.each do |followee| 
-      followee.photos.each do |photo|
-        photos << photo
-      end
-    end
+    photos = self.followees.map { |followee| followee.photos }.flatten!
     photos = (photos.sort_by { |photo| photo.created_at }).reverse
+  end
+
+  def feed_photos
+    followee_ids = self.followees.map { |followee| followee.id }
+    Photo.find_by_sql("SELECT photos.* FROM photos
+                    JOIN albums ON imageable_id = albums.id
+                    JOIN users ON albums.user_id = users.id
+                    WHERE users.id IN (#{followee_ids.join(',')})
+                    AND imageable_type = 'Album'
+                    ORDER BY photos.created_at DESC;
+                  ")
   end
 
 end

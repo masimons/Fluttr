@@ -30,8 +30,9 @@ class UsersController < ApplicationController
 
   def feed
     # grab friends' photos in desc order
-    @followees = current_user.followees.includes(:photos).order('created_at DESC').includes(:comments) #.includes(:user)
-    @photos = current_user.recent_friends_photos
+    followee_ids = current_user.followees.map { |followee| followee.id }
+    @followees = current_user.followees.includes(:photos).includes(:comments) #.includes(:user)
+    @photos = current_user.feed_photos  
   end
 
 end

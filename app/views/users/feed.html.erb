@@ -14,8 +14,21 @@
       </a>
       <div class="media-body">
         <h5 class="media-heading"><a href="<% user_path(photo.imageable.user) %>"><%= photo.imageable.user.username %></a></h5>
-        <a href="<%= photo_path(photo) %>"><img src="<%= photo.image_url %>/convert?w=500&h=500&fit=clip"></image></a>
-      </div>
+        <a href="<%= photo_path(photo) %>"><img src="<%= photo.image_url %>/convert?w=800&h=800&fit=clip"></image></a>
+      </div>  
     </div>
+
+    <%# photo.comments do |comment| %>
+     <!--  <div class="media">
+        <a class="pull-left" href="<%#= user_path(comment.user) %>">
+          <img class="media-object" src="<%#= comment.user.profile_url %>/convert?w=50&h=50&fit=clip">
+        </a>
+        <div class="media-body">
+          <h5 class="media-heading"><a href="<%#= user_path(comment.user) %>"><%#= comment.user.username %></a></h5>
+          <%#= comment.body %>
+        </div>  
+      </div> -->
+    <%# end %>
   <% end %>
 </div>
+

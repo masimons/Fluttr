@@ -13,7 +13,7 @@
   <div class="container-fluid">
     <div class="row-fluid">
       <% if user_signed_in? %>
-        <div class="span1 bs-docs-sidebar" data-spy="affix" data-offset="50">
+        <div class="span1 bs-docs-sidebar sidebar-fixed" data-spy="affix-top" data-offset="50">
           <ul class="nav nav-list bs-docs-sidenav">
             <li><a href="<%= user_path(current_user) %>"></i>Profile</a></li>
             <li class="divider"></li>
@@ -32,7 +32,7 @@
         </div>
       <% end %>
 
-      <div class="well span11">
+      <div class="well span11 pull-right">
         <% flash.try(:each) do |name, msg| %>
           <%= msg %>
         <% end %>
