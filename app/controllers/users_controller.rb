@@ -29,10 +29,13 @@ class UsersController < ApplicationController
   end
 
   def feed
-    # grab friends' photos in desc order
-    followee_ids = current_user.followees.map { |followee| followee.id }
-    @followees = current_user.followees.includes(:photos).includes(:comments) #.includes(:user)
-    @photos = current_user.feed_photos  
+    if params[:page]
+      @photos = Kaminari.paginate_array(current_user.feed_photos).page(params[:page])
+      render :feed, :layout => false
+    else
+      #@followees = current_user.followees.includes(:photos).includes(:comments)
+      @photos = Kaminari.paginate_array(current_user.feed_photos).page(1)
+    end
   end
 
 end

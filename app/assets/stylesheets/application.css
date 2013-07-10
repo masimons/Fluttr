@@ -14,6 +14,10 @@
  *= require_tree .
  */
 
+ .white_link {
+  color: white;
+ }
+
 .edit_photo {
   margin-top: 30px;
 }

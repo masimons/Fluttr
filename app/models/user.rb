@@ -24,6 +24,8 @@
 #
 
 class User < ActiveRecord::Base
+  paginates_per 5
+
   after_create :add_album
 
   devise :database_authenticatable, :registerable,

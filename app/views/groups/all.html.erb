@@ -3,11 +3,11 @@
 <div>
   <% @groups.each do |group| %>
     <div class="media">
-    <a class="pull-left" href="#">
+    <a class="pull-left" href="<%= group_path(group) %>">
       <img class="media-object" src="<%= group.image_url %>/convert?w=100&h=100&fit=clip">
     </a>
     <div class="media-body">
-      <h4 style="display:inline" class="media-heading"><%= group.name %></h4>
+      <h4 style="display:inline" class="media-heading"><a class="white_link" href="<%= group_path(group) %>"><%= group.name %></a></h4>
 
         <a id="join<%= group.id %>" class="join" style="display:<%= 'none' if group.members.include?(current_user) %>" data-id="<%= group.id %>">Join</a></li>
         <a id="leave<%= group.id %>" class="leave" style="display:<%= 'none' if !group.members.include?(current_user) %>" data-id="<%= group.id %>">Leave Group</a></li>
