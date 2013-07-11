@@ -30,15 +30,16 @@
   display: inline;
 }
 
-img.cover_photo {
-  width: 100%;
-  height: 300px;
-  background-size: cover;
+img.profile_picture {
+  margin-top: -150px;
+  margin-left: 0px;
+  z-index: 999;
+  position: absolute;
 }
 
-img.profile_picture {
-  margin-top: -120px;
-  margin-left: 30px;
+#map-canvas {
+  z-index: 1;
+  position: relative;
 }
 
 textarea.comment {

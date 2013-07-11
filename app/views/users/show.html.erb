@@ -1,6 +1,6 @@
 <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
 
-<img class="cover_photo" src="<%= @user.cover_url %>">
+<div id="map-canvas"></div>
 
 <img class="profile_picture" src="<%= @user.profile_url %>/convert?w=150&h=150&fit=crop">
 
@@ -26,7 +26,7 @@
     <li id="groups"><a href="#" data-toggle="tab">Groups</a></li>
     <li id="favorites"><a href="#" data-toggle="tab">Favorites</a></li>
     <li id="albums"><a href="#" data-toggle="tab">Albums</a></li>
-    <li id="map"><a href="<%= mymap_user_url(@user) %>">Map</a></li>
+    <li id="following"><a href="#" data-toggle="tab">Following</a></li>
   </ul>
 </div>
 
@@ -36,8 +36,60 @@
       <a href="<%= photo_path(photo) %>"><img class="worldmap_photos" src="<%=photo.image_url %>/convert?w=300&h=300&fit=crop"></img></a>
     </div>
   <% end %>
-</content>
+</div>
 
+<% if @user == current_user %>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+    <h3 id="myModalLabel">Choose photos:</h3>
+  </div>
+
+  <form action="/map/set_coord_attrs" method="post">
+  <div class="modal-body">
+    <% @albums.each do |album| %>
+      <% next if album.photos.empty? %>
+      <div class="album" data-id="<%= album.id %>" >
+        <div style="display: inline;">
+          <%= album.title %>
+        </div>
+        <div>
+          <!-- <img src='https://www.filepicker.io/api/file/LE6Na8FtSRCyK4HUyiLW/convert?w=50&h=50&fit=clip'> -->
+          <img src='<%= album.photos.first.image_url %>/convert?w=100&h=100&fit=clip'></img>
+        </div>
+      </div>
+
+      <!-- Create a hidden div for each album and fill it with its photos and checkboxes -->
+      
+        <% album.photos.each do |photo| %>
+          <div class="photo album<%= album.id %>" id="photo<%= photo.id %>" data-id="<%= photo.id %>" style="display:none;">
+            <div style="float:left; text-align:center; padding-right:25px;">
+              <label>
+                <img src="<%= photo.image_url %>/convert?w=100&h=100&fit=clip"></img><br>
+                <input type="checkbox" id="photo<%= photo.id %>" name="photo_ids[]" value="<%= photo.id %>">
+              </label>
+            </div>
+          </div>
+
+        <% end %>
+    <% end %>
+  </div>
+  <input type="hidden"
+                name="authenticity_token"
+                value="<%= form_authenticity_token %>" />
+  <input type="hidden" value="put" name="_method" />
+  <input id="hidden_lat" type="hidden" name="photo[lat]" />
+  <input id="hidden_lng" type="hidden" name="photo[lng]" />
+  <div class="modal-footer">
+    <button class="btn go_back" style="display: none;">Back</button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <input type="submit" value="Save" class="btn btn-primary">
+    
+    <!-- <button class="btn btn-primary">Save</button> -->
+  </div>
+  </form>
+</div>
+<% end %>
 
 <script type="text/javascript">
   $('#favorites').on('click', function(event) {
@@ -50,35 +102,10 @@
     })
   })
 
-
+  $('#groups').on('click', function(event) {
+    
+  })
 </script>
-
-
-  <!-- <div class="row-fluid">
-
-    <div class="span4">
-      <h3>Recent Photos</h3>
-      < @photos.each do |photo| >
-        <div style="text-align:center;">
-          <a href="< photo_path(photo) >"><img style="padding: 10px;" src="<photo.image_url >/convert?w=300&h=300&fit=clip"></img></a>
-        </div>
-      < end >
-    </div>
-
-    <div class="span4">
-      <h3 style="text-align:center;">Groups</h3>
-    </div>
-
-    <div class="span4">
-      <h3 style="text-align:right;">Favorites</h3>
-      < @favorites.each do |favorite| >
-        <div style="text-align:center;">
-          <a href="<photo_path(favorite) >"><img style="padding: 10px;" src="<favorite.image_url >/convert?w=300&h=300&fit=clip"></img></a>
-        </div>
-      < end >
-    </div>
-
-  </div> -->
 
 <script type="text/javascript">
   filepicker.setKey('AhjzhTx37SyaNYS8XvjR9z');
@@ -110,59 +137,9 @@
     });
   });
 
-  $("img.cover_photo").on("click", function(event) {
-    filepicker.pickAndStore({multiple: false, mimetype:"image/*"},
-    {location:"S3"}, function(InkBlobs){
-
-      var url = inkblobToUrl(InkBlobs);
-      // var img = "<img src='" + url + "/convert?w=300&h=300&fit=clip'></img>"
-      // $('.profile_picture').html(img);
-
-      $.ajax({
-        type: "PUT",
-        url: "/users/" + "<%= current_user.id %>" + ".json",
-        data: { user: {cover_url: url }},
-        success: function(data) {
-          console.log(data.cover_url);
-          var img = data.cover_url
-          $('.cover_photo').attr("src", img);
-        }
-      });
-
-    });
-  });
 </script>
 
 <script type="text/javascript">
-  filepicker.setKey('AhjzhTx37SyaNYS8XvjR9z');
-
-  var inkblobToUrl = function(InkBlobs) {
-    return InkBlobs[0].url;
-
-  }
-
-  $("#upload_coverpic").on("click", function() {
-    filepicker.pickAndStore({multiple: false, mimetype:"image/*"},
-    {location:"S3"}, function(InkBlobs){
-
-      var url = inkblobToUrl(InkBlobs);
-      console.log(url);
-      // var img = "<img src='" + url + "/convert?w=300&h=300&fit=clip'></img>"
-      // $('.profile_picture').html(img);
-
-      $.ajax({
-        type: "PUT",
-        url: "/user/" + "<%= current_user.id %>" + ".json",
-        data: { user: {cover_url: url }},
-        success: function(data) {
-          console.log(data.image_url);
-          var img = data.image_url
-          $('.cover_photo').html(img);
-        }
-      });
-
-    });
-  });
 
   $('a#follow').on("click", function(event) {
     console.log($(event.currentTarget).attr('data-id'));
@@ -211,3 +188,99 @@
       })
      }
   }); -->
+
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+<style type="text/css">
+  #yield { height: 400px; margin: 0; padding: 0 }
+  #map-canvas { height: 100% }
+</style>
+
+<script type="text/javascript"
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI7wc83S1nexP3v0zR_GSl-_Se_JnTzPE&sensor=false">
+</script>
+
+<script type="text/javascript">
+  function initialize() {
+    var mapOptions = {
+      center: new google.maps.LatLng(20.000,0.000),
+      zoom: 2,
+      mapTypeId: google.maps.MapTypeId.HYBRID
+    };
+
+    var map = new google.maps.Map(document.getElementById("map-canvas"),
+      mapOptions);
+
+    <% if @user == current_user %>
+    google.maps.event.addListener(map, "click", function(event){
+      // var coords = [Math.round(event.latLng.jb), Math.round(event.latLng.kb)]
+      console.log((event.latLng.jb));
+      // $('#hidden_lat').attr('value', Math.round(event.latLng.jb));
+      $('#hidden_lat').val(Math.round(event.latLng.jb * 1000)/1000);
+      // $('#hidden_lng').attr('value', Math.round(event.latLng.kb));
+      $('#hidden_lng').val(Math.round(event.latLng.kb * 1000)/1000);
+      $('#myModal').modal();
+      //hidden field with latLng
+    });
+    <% end %>
+
+    $.ajax({
+      url: "/users/" + <%= @user.id %> + "/mymap.json",
+      type: "GET",
+      success: function(data) {
+
+        var coords = []
+        for (var i=0; i<data.length; i++) {
+          coords.push([data[i].lat, data[i].lng]);
+        }
+        coords = _.uniq(coords); // write own
+
+        var marker, j;
+        for (j=0; j<coords.length; j++) {
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(coords[j][0], coords[j][1]),
+            map: map
+          });
+
+          google.maps.event.addListener(marker, "click", function(a) {
+            var rounded_lat = Math.round(a.latLng.jb*1000)/1000
+            var rounded_lng = Math.round(a.latLng.kb*1000)/1000 
+            $.ajax({
+              url: '/map/coords_to_photos.json',
+              type: 'GET',
+              data: { lat: rounded_lat, lng: rounded_lng },
+              success: function(data) {
+                var str = ''
+                _.each(data, function(photo) {
+                  str += "<div class='worldmap_photos'><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
+                })
+                $('#content').html(str);
+              }
+            })
+          })
+
+        }
+      }
+    })
+  }
+// str += "<div class='worldmap_photos'><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
+// <iframe src="/photos/" + photo.id></iframe>
+
+  <% if @user == current_user %>
+  $('button.go_back').on('click', function(event) {
+    event.preventDefault();
+    $('.photo').hide();
+    $('.album').show();
+  })
+
+  $('.album').on("click", function(event) {
+    console.log(event.currentTarget);
+    var album_num = $(event.currentTarget).attr('data-id');
+    $('.album').hide();
+    $('.album' + album_num).show();
+    $('.go_back').show();
+  })
+  <% end %>
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>

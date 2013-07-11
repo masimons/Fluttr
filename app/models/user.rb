@@ -78,4 +78,8 @@ class User < ActiveRecord::Base
                   ")
   end
 
+  # def to_param
+  #   "#{self.username}"
+  # end
+
 end

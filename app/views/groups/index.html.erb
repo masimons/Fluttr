@@ -1,7 +1,7 @@
 <%= link_to "Create a group", new_group_path %>
 
 <% unless @owned_groups.empty? %>
-  <h2>You are the creator of:</h2>
+  <h2>Creator of:</h2>
   <div>
     <% @owned_groups.each do |group| %>
       <div class="media">

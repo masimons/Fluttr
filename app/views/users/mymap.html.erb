@@ -56,12 +56,10 @@
 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
-
 <style type="text/css">
-  #yield { height: 500px; margin: 0; padding: 0 }
+  #yield { height: 400px; margin: 0; padding: 0 }
   #map-canvas { height: 100% }
 </style>
-
 
 <script type="text/javascript"
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI7wc83S1nexP3v0zR_GSl-_Se_JnTzPE&sensor=false">
@@ -72,7 +70,7 @@
     var mapOptions = {
       center: new google.maps.LatLng(20.000,0.000),
       zoom: 2,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: google.maps.MapTypeId.HYBRID
     };
 
     var map = new google.maps.Map(document.getElementById("map-canvas"),
