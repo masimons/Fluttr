@@ -26,7 +26,7 @@
     <li id="groups"><a href="#" data-toggle="tab">Groups</a></li>
     <li id="favorites"><a href="#" data-toggle="tab">Favorites</a></li>
     <li id="albums"><a href="#" data-toggle="tab">Albums</a></li>
-    <li id="map"><a href="<%= mymap_user_path(@user) %>" data-toggle="tab">Map</a></li>
+    <li id="map"><a href="<%= mymap_user_url(@user) %>">Map</a></li>
   </ul>
 </div>
 
@@ -192,7 +192,7 @@
       }
     });
   });
-</script>
+</script> 
 
 
 <!--   var page = 1;
