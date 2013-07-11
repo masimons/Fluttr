@@ -18,6 +18,7 @@ class MapsController < ApplicationController
   def set_coord_attrs
     @user = current_user
     @albums = current_user.albums
+    @recent_photos = @user.photos.order('created_at DESC').first(9)
     lat = params[:photo][:lat].to_f
     lng = params[:photo][:lng].to_f
     @photos = params[:photo_ids].each do |photo_id|

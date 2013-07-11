@@ -33,11 +33,11 @@
 </div>
 
 <div id="content">
-<!--   <%# @photos.each do |photo| %>
+  <% @recent_photos.each do |photo| %>
     <div>
-      <a href="<%#= photo_path(photo) %>"><img class="worldmap_photos" src="<%#=photo.image_url %>/convert?w=300&h=300&fit=crop"></img></a>
+      <a href="<%= photo_path(photo) %>"><img class="worldmap_photos" src="<%=photo.image_url %>/convert?w=300&h=300&fit=crop"></img></a>
     </div>
-  <%# end %> -->
+  <% end %>
 </div>
 
 <% if @user == current_user %>
@@ -96,6 +96,7 @@
 <script type="text/javascript">
 
   $('#favorites').on('click', function(event) {
+    event.preventDefault();
     console.log(event);
     $.ajax({
       url: '/users/' + <%= @user.id %> + '/favorites',
@@ -109,6 +110,7 @@
   })
 
   $('#groups').on('click', function(event) {
+    event.preventDefault();
     console.log(event.currentTarget);
     $.ajax({
       url: '/users/' + <%= @user.id %> + '/groups',
@@ -121,20 +123,8 @@
     })
   })
 
-  $('#albums').on('click', function(event) {
-    console.log(event.currentTarget);
-    $.ajax({
-      url: '/users/' + <%= @user.id %> + '/albums',
-      type: 'GET',
-      success: function(data) {
-        $('#content').html(data);
-        $(event.currentTarget).addClass('active');
-        $(event.currentTarget).siblings().removeClass('active').addClass('inactive');
-      }
-    })
-  })
-
   $('#following').on('click', function(event) {
+    event.preventDefault();
     console.log(event.currentTarget);
     $.ajax({
       url: '/users/' + <%= @user.id %> + '/followings',
@@ -302,19 +292,19 @@
 // <iframe src="/photos/" + photo.id></iframe>
 
   <% if @user == current_user %>
-  $('button.go_back').on('click', function(event) {
-    event.preventDefault();
-    $('.photo').hide();
-    $('.album').show();
-  })
+    $('button.go_back').on('click', function(event) {
+      event.preventDefault();
+      $('.photo').hide();
+      $('.album').show();
+    })
 
-  $('.album').on("click", function(event) {
-    console.log(event.currentTarget);
-    var album_num = $(event.currentTarget).attr('data-id');
-    $('.album').hide();
-    $('.album' + album_num).show();
-    $('.go_back').show();
-  })
+    $('.album').on("click", function(event) {
+      console.log(event.currentTarget);
+      var album_num = $(event.currentTarget).attr('data-id');
+      $('.album').hide();
+      $('.album' + album_num).show();
+      $('.go_back').show();
+    })
   <% end %>
 
   google.maps.event.addDomListener(window, 'load', initialize);
