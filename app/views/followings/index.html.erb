@@ -1,0 +1,4 @@
+<% @followees.each do |followee| %>
+  <a href="<%= user_path(followee) %>"><img src="<%= followee.profile_url %>/convert?w=200&h=200&fit=clip"></img>
+    <%= followee.username %></a>
+<% end %>

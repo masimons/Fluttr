@@ -1,5 +1,11 @@
 class FollowingsController < ApplicationController
 
+  def index
+    @user = User.find(params[:user_id])
+    @followees = @user.followees
+    render :index, :layout => false
+  end
+
   def create
     @following = Following.create(:followee_id => params[:followee_id]) #.merge(:follower_id => current_user.id)
     @following.follower_id = current_user.id

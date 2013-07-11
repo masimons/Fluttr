@@ -24,10 +24,10 @@
     </div>
   </div> -->
   <ul class="nav nav-tabs">
-    <li id="recent_photos" class="active"><a href="#" data-toggle="tab">Recent Photos</a></li>
+    <li id="recent_photos" class="active"><a href="<%= user_path(@user) %>">Recent Photos</a></li>
     <li id="groups"><a id="groups" href="#">Groups</a></li>
     <li id="favorites"><a href="#" data-toggle="tab">Favorites</a></li>
-    <li id="albums"><a href="#" data-toggle="tab">Albums</a></li>
+    <li id="albums"><a href="<%= user_photos_path(@user) %>">Photos</a></li>
     <li id="following"><a href="#" data-toggle="tab">Following</a></li>
   </ul>
 </div>
@@ -125,6 +125,19 @@
     console.log(event.currentTarget);
     $.ajax({
       url: '/users/' + <%= @user.id %> + '/albums',
+      type: 'GET',
+      success: function(data) {
+        $('#content').html(data);
+        $(event.currentTarget).addClass('active');
+        $(event.currentTarget).siblings().removeClass('active').addClass('inactive');
+      }
+    })
+  })
+
+  $('#following').on('click', function(event) {
+    console.log(event.currentTarget);
+    $.ajax({
+      url: '/users/' + <%= @user.id %> + '/followings',
       type: 'GET',
       success: function(data) {
         $('#content').html(data);

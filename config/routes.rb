@@ -7,6 +7,8 @@ Flickr::Application.routes.draw do
       get 'feed'
     end
     resources :favorites, :only => [:index]
+    resources :followings, :only => [:index]
+    resources :photos, :only => [:index]
     resources :groups, :only => [:index]
     resources :albums do
       member do
