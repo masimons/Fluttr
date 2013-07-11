@@ -14,5 +14,6 @@
 //= require underscore
 //= require jquery_ujs
 //= require jquery-fileupload
+//= require jquery.fancybox
 //= require gritter
 //= require_tree .

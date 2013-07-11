@@ -1,3 +1,4 @@
 <% @favorites.each do |photo| %>
-  <a href="<%= photo_path(photo) %>"><img class="worldmap_photos" src="<%= photo.image_url %>/convert?w=300&h=300&fit=crop"></a>
+  <a class="fancybox" rel="group" href="<%= photo.image_url %>"><img class="worldmap_photos" src="<%= photo.image_url %>/convert?w=300&h=300&fit=crop"></img></a>
 <% end %>
+

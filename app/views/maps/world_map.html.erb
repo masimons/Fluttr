@@ -54,7 +54,7 @@
               success: function(data) {
                 var str = ''
                 _.each(data, function(photo) {
-                  str += "<div class='worldmap_photos'><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
+                  str += "<div class='worldmap_photos'><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=300&h=300&fit=crop'></a></div>"
                 })
                 $('#photos').html(str);
               }

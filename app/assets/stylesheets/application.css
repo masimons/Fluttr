@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require jquery.fileupload-ui
+ *= require jquery.fancybox
  *= require gritter
  *= require_tree .
  */
@@ -48,11 +49,6 @@ textarea.comment {
 
 div.comments {
   width: 500px;
-}
-
-.profile_username {
-  /*margin-left: 250px;*/
-  margin-left: 25%;
 }
 
 .grid_thumbnail {

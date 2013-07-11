@@ -6,7 +6,7 @@
 
 <img class="profile_picture" src="<%= @user.profile_url %>/convert?w=150&h=150&fit=crop">
 
-<h2 style="display: inline;" class="profile_username"><%= @user.username %>'s Profile</h2>
+<h2 style="display: inline;"><%= @user.username %>'s Profile</h2>
 
 
 <a class="pull-right" id="follow" style="display:<%= 'none' if current_user.followees.include?(@user) || current_user == @user %>" data-id="<%= @user.id %>">
@@ -94,13 +94,16 @@
 <% end %>
 
 <script type="text/javascript">
+
   $('#favorites').on('click', function(event) {
+    console.log(event);
     $.ajax({
       url: '/users/' + <%= @user.id %> + '/favorites',
       type: 'GET',
       success: function(data) {
         console.log(data);
         $('#content').html(data);
+        $(".fancybox").fancybox();
       }
     })
   })
@@ -130,9 +133,7 @@
       }
     })
   })
-</script>
 
-<script type="text/javascript">
   filepicker.setKey('AhjzhTx37SyaNYS8XvjR9z');
 
   var inkblobToUrl = function(InkBlobs) {
@@ -161,10 +162,6 @@
 
     });
   });
-
-</script>
-
-<script type="text/javascript">
 
   $('a#follow').on("click", function(event) {
     console.log($(event.currentTarget).attr('data-id'));
@@ -277,7 +274,7 @@
               success: function(data) {
                 var str = ''
                 _.each(data, function(photo) {
-                  str += "<div class='worldmap_photos'><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=200&h=200&fit=clip'></a></div>"
+                  str += "<div class='worldmap_photos'><a href='/photos/" + photo.id + "'><img src='" + photo.image_url + "/convert?w=300&h=300&fit=crop'></a></div>"
                 })
                 $('#content').html(str);
               }
