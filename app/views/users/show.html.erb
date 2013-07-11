@@ -33,11 +33,11 @@
 </div>
 
 <div id="content">
-  <% @photos.each do |photo| %>
+<!--   <%# @photos.each do |photo| %>
     <div>
-      <a href="<%= photo_path(photo) %>"><img class="worldmap_photos" src="<%=photo.image_url %>/convert?w=300&h=300&fit=crop"></img></a>
+      <a href="<%#= photo_path(photo) %>"><img class="worldmap_photos" src="<%#=photo.image_url %>/convert?w=300&h=300&fit=crop"></img></a>
     </div>
-  <% end %>
+  <%# end %> -->
 </div>
 
 <% if @user == current_user %>

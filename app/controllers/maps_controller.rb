@@ -16,13 +16,14 @@ class MapsController < ApplicationController
   end
 
   def set_coord_attrs
+    @user = current_user
     @albums = current_user.albums
     lat = params[:photo][:lat].to_f
     lng = params[:photo][:lng].to_f
     @photos = params[:photo_ids].each do |photo_id|
       Photo.find(photo_id).update_attributes(:lat => lat, :lng => lng)
     end
-    render "users/mymap"
+    render "users/show"
   end
 
 end
