@@ -1,8 +1,10 @@
 class GroupsController < ApplicationController
 
   def index
-    @owned_groups = current_user.owned_groups
-    @member_of_groups = current_user.groups
+    @user = User.find(params[:user_id])
+    @owned_groups = @user.owned_groups
+    @member_of_groups = @user.groups
+    render :index, :layout => false
   end
 
   def create
@@ -54,5 +56,5 @@ class GroupsController < ApplicationController
     @group.destroy
     redirect_to user_groups_path(current_user)
   end
-  
+
 end

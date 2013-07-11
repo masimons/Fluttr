@@ -1,6 +1,8 @@
 <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
 
-<div id="map-canvas"></div>
+<div id="map-yield">
+  <div id="map-canvas"></div>
+</div>
 
 <img class="profile_picture" src="<%= @user.profile_url %>/convert?w=150&h=150&fit=crop">
 
@@ -23,7 +25,7 @@
   </div> -->
   <ul class="nav nav-tabs">
     <li id="recent_photos" class="active"><a href="#" data-toggle="tab">Recent Photos</a></li>
-    <li id="groups"><a href="#" data-toggle="tab">Groups</a></li>
+    <li id="groups"><a id="groups" href="#">Groups</a></li>
     <li id="favorites"><a href="#" data-toggle="tab">Favorites</a></li>
     <li id="albums"><a href="#" data-toggle="tab">Albums</a></li>
     <li id="following"><a href="#" data-toggle="tab">Following</a></li>
@@ -94,16 +96,39 @@
 <script type="text/javascript">
   $('#favorites').on('click', function(event) {
     $.ajax({
-      url: '/users/' + <%= @user.id %> + '/favorites.json',
+      url: '/users/' + <%= @user.id %> + '/favorites',
       type: 'GET',
       success: function(data) {
         console.log(data);
+        $('#content').html(data);
       }
     })
   })
 
   $('#groups').on('click', function(event) {
-    
+    console.log(event.currentTarget);
+    $.ajax({
+      url: '/users/' + <%= @user.id %> + '/groups',
+      type: 'GET',
+      success: function(data) {
+        $('#content').html(data);
+        $(event.currentTarget).addClass('active');
+        $(event.currentTarget).siblings().removeClass('active').addClass('inactive');
+      }
+    })
+  })
+
+  $('#albums').on('click', function(event) {
+    console.log(event.currentTarget);
+    $.ajax({
+      url: '/users/' + <%= @user.id %> + '/albums',
+      type: 'GET',
+      success: function(data) {
+        $('#content').html(data);
+        $(event.currentTarget).addClass('active');
+        $(event.currentTarget).siblings().removeClass('active').addClass('inactive');
+      }
+    })
   })
 </script>
 
@@ -192,7 +217,7 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 <style type="text/css">
-  #yield { height: 400px; margin: 0; padding: 0 }
+  #map-yield { height: 400px; margin: 0; padding: 0 }
   #map-canvas { height: 100% }
 </style>
 

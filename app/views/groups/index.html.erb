@@ -30,7 +30,7 @@
   <h2>You aren't a member of any groups yet!</h2>
   <h4>Check some out <a href="<%= all_groups_path %>">here</a>.
 <% else %>
-  <h2>You are a member of:</h2>
+  <h2>Member of:</h2>
 
   <div>
     <% @member_of_groups.each do |group| %>
@@ -51,22 +51,3 @@
     <% end %>
   </div>
 <% end %>
-
-
- <script>
-//   $('#edit_group_link').on("click" function(event) {
-//     templateFn = JST["edit"]
-//     renderedContent = templateFn({  })
-//   })
-
-// </script>
-
-<script>
-// //   $(document).ready(function() {
-// //     $('a#edit_group_link').on("click", function(event) {
-// //       console.log($(event.currentTarget).attr('data-id'));
-// //       id = $(event.currentTarget).attr('data-id'));
-// //       $('#edit_' + id).html()
-// //     });
-// //   });
-</script>

@@ -7,7 +7,7 @@
         No photos!
       <% else %>
         <a href="<%= user_album_path(current_user, album) %>">
-          <img src="<%= album.photos.first.image_url %>/convert?w=200&h=200&fit=clip">
+          <img src="<%= album.photos.first.image_url %>/convert?w=300&h=300&fit=crop">
         </a>
       <% end %>
     </div>

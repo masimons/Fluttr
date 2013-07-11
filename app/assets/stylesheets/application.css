@@ -93,3 +93,7 @@ h1.large {
 .photo_feed {
   /*margin-left: 10%*/
 }
+
+#content {
+  height: 100%;
+}

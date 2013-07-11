@@ -4,7 +4,9 @@ class AlbumsController < ApplicationController
   end
 
   def index
-    @albums = current_user.albums
+    @user = User.find(params[:user_id])
+    @albums = @user.albums
+    render :index, :layout => false
   end
 
   def create
