@@ -12,16 +12,57 @@
 <a class="pull-right" id="unfollow" style="display:<%= 'none' if !current_user.followees.include?(@user) || current_user == @user %>" data-id="<%= @user.id %>">
   <button class="btn btn-primary btn-large">Unfollow</button></a>
 
-<!-- <div class="container-fluid"> -->
-  <div class="row-fluid">
+<br><br>
+
+<div class="tabbable tabs-below"> <!-- Only required for left/right tabs -->
+<!--   <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+    </div>
+    <div class="tab-pane" id="tab2">
+    </div>
+  </div> -->
+  <ul class="nav nav-tabs">
+    <li id="recent_photos" class="active"><a href="#" data-toggle="tab">Recent Photos</a></li>
+    <li id="groups"><a href="#" data-toggle="tab">Groups</a></li>
+    <li id="favorites"><a href="#" data-toggle="tab">Favorites</a></li>
+    <li id="albums"><a href="#" data-toggle="tab">Albums</a></li>
+    <li id="map"><a href="<%= mymap_user_path(@user) %>" data-toggle="tab">Map</a></li>
+  </ul>
+</div>
+
+<div id="content">
+  <% @photos.each do |photo| %>
+    <div>
+      <a href="<%= photo_path(photo) %>"><img class="worldmap_photos" src="<%=photo.image_url %>/convert?w=300&h=300&fit=crop"></img></a>
+    </div>
+  <% end %>
+</content>
+
+
+<script type="text/javascript">
+  $('#favorites').on('click', function(event) {
+    $.ajax({
+      url: '/users/' + <%= @user.id %> + '/favorites.json',
+      type: 'GET',
+      success: function(data) {
+        console.log(data);
+      }
+    })
+  })
+
+
+</script>
+
+
+  <!-- <div class="row-fluid">
 
     <div class="span4">
       <h3>Recent Photos</h3>
-      <% @photos.each do |photo| %>
+      < @photos.each do |photo| >
         <div style="text-align:center;">
-          <a href="<%= photo_path(photo) %>"><img style="padding: 10px;" src="<%=photo.image_url %>/convert?w=300&h=300&fit=clip"></img></a>
+          <a href="< photo_path(photo) >"><img style="padding: 10px;" src="<photo.image_url >/convert?w=300&h=300&fit=clip"></img></a>
         </div>
-      <% end %>
+      < end >
     </div>
 
     <div class="span4">
@@ -30,22 +71,14 @@
 
     <div class="span4">
       <h3 style="text-align:right;">Favorites</h3>
-      <% @favorites.each do |favorite| %>
+      < @favorites.each do |favorite| >
         <div style="text-align:center;">
-          <a href="<%= photo_path(favorite) %>"><img style="padding: 10px;" src="<%=favorite.image_url %>/convert?w=300&h=300&fit=clip"></img></a>
+          <a href="<photo_path(favorite) >"><img style="padding: 10px;" src="<favorite.image_url >/convert?w=300&h=300&fit=clip"></img></a>
         </div>
-      <% end %>
+      < end >
     </div>
 
-  </div>
-<!-- </div> -->
-
-
-
-
-
-
-
+  </div> -->
 
 <script type="text/javascript">
   filepicker.setKey('AhjzhTx37SyaNYS8XvjR9z');
@@ -160,3 +193,21 @@
     });
   });
 </script>
+
+
+<!--   var page = 1;
+  $(window).scroll(function (event) { 
+   if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
+      console.log(event)
+      page += 1;
+      $.ajax({
+        url: '/users/' + <%= current_user.id %> + '/feed',
+        type: 'GET',
+        data: { page: page },
+        success: function(data) {
+          console.log($(data)[2].innerHTML);
+          $('.photo_feed').append($(data)[2].innerHTML);
+        }
+      })
+     }
+  }); -->

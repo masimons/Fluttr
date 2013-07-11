@@ -1,7 +1,12 @@
 class FavoritesController < ApplicationController
 
   def index
-    @favorites = current_user.favorite_photos
+    @user = User.find(params[:user_id])
+    @favorites = @user.favorite_photos
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render :json => @favorites }
+    end
   end
 
   def create

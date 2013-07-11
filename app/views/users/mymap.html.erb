@@ -90,7 +90,7 @@
     });
 
     $.ajax({
-      url: "/users/" + <%= current_user.id %> + "/mymap.json",
+      url: "/users/" + <%= @user.id %> + "/mymap.json",
       type: "GET",
       success: function(data) {
 

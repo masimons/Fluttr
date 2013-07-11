@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @photos = @user.photos.order('created_at DESC').first(5)
+    @photos = @user.photos.order('created_at DESC').first(9)
     @favorites = @user.favorite_photos
   end
 
