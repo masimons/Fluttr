@@ -55,6 +55,12 @@ class PhotosController < ApplicationController
     end
   end
 
+  def destroy
+    @photo = Photo.find(params[:id])
+    @photo.destroy
+    redirect_to :back
+  end
+
   def all
     @photos = Photo.order('created_at DESC')
   end

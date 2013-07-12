@@ -17,7 +17,7 @@ Flickr::Application.routes.draw do
     end
   end
   
-  resources :photos, :only => [:new, :create, :show, :edit, :update] do
+  resources :photos, :only => [:new, :create, :show, :edit, :update, :destroy] do
     collection do
       get 'all', :as => :all
     end

@@ -28,6 +28,8 @@
     <div class="edit_photo span3" data-id-photo="<%= photo.id %>">
       <img src="<%=photo.image_url %>/convert?w=200&h=200&fit=clip"></img>
       <br>
+
+      <%= link_to "Delete", photo_path(photo), :method => :delete %>
       <br>
 
       <label for="name">Name</label>
