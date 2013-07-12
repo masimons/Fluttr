@@ -1,5 +1,6 @@
 <h2><%= @album.title %></h2>
-<%= link_to "Edit album", edit_user_album_path(current_user, @album) %>
+<%= link_to "Edit album", edit_user_album_path(current_user, @album) %><br>
+<%= link_to "Delete album", user_album_path(current_user, @album), :method => :delete %>
 
 <div class="row-fluid">
   <% @album.photos.each do |photo| %>

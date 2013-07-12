@@ -1,4 +1,5 @@
 class AlbumsController < ApplicationController
+  before_filter :redirect_user
 
   def new
   end
@@ -37,5 +38,19 @@ class AlbumsController < ApplicationController
     @photos = @album.photos
     render :json => @photos
   end
+
+  def destroy
+    @album = Album.find(params[:id])
+    @album.destroy
+    redirect_to user_albums_path(current_user) 
+  end
+
+  def redirect_user
+    user = User.find(params[:user_id])
+    unless current_user == user
+      redirect_to user_path(user)
+    end
+  end
+
 
 end
