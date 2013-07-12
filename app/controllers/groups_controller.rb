@@ -11,11 +11,11 @@ class GroupsController < ApplicationController
     @group = current_user.owned_groups.build(params[:group])  
     if @group.save
       Membership.create(:user_id => current_user.id, :group_id => @group.id)
-      redirect_to user_groups_path(current_user)
+      redirect_to group_path(@group)
     else
       flash[:errors] ||= []
       flash[:errors] << @group.errors.full_messages.to_sentence
-      render :back
+      redirect_to :back
     end
   end
 
@@ -54,7 +54,7 @@ class GroupsController < ApplicationController
   def destroy
     @group = Group.find(params[:id])
     @group.destroy
-    redirect_to user_groups_path(current_user)
+    redirect_to user_path(current_user)
   end
 
 end

@@ -12,6 +12,8 @@
 class Album < ActiveRecord::Base
   attr_accessible :title, :user_id
 
+  validates :title, :user_id, :presence => true
+
   belongs_to :user
   has_many :photos, :as => :imageable, :dependent => :destroy
 

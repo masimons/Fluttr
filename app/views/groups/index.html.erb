@@ -25,8 +25,12 @@
 <% end %>
 
 <% if @member_of_groups.empty? %>
-  <h2>You aren't a member of any groups yet!</h2>
-  <h4>Check some out <a href="<%= all_groups_path %>">here</a>.
+  <% if @user == current_user %>
+    <h2>You aren't a member of any groups yet!</h2>
+    <h4>Check some out <a href="<%= all_groups_path %>">here</a>.
+  <% else %>
+    <h2><%= @user.username %> isn't a member of any groups yet.</h2>
+  <% end %>
 <% else %>
   <h2>Member of:</h2>
 

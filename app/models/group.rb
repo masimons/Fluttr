@@ -14,6 +14,8 @@
 class Group < ActiveRecord::Base
   attr_accessible :name, :description, :creator_id, :image_url
 
+  validates :name, :creator_id, :presence => true
+
   has_many :memberships, :dependent => :destroy
   has_many :members, :through => :memberships, :source => :user, :dependent => :destroy
 
