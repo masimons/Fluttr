@@ -62,6 +62,6 @@ class PhotosController < ApplicationController
   end
 
   def all
-    @photos = Photo.order('created_at DESC')
+    @photos = Photo.where(:imageable_type => 'Album').order('created_at DESC')
   end
 end

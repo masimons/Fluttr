@@ -31,6 +31,8 @@ gem 'pg'
 
 gem 'gritter'
 
+gem 'rest-client'
+
 gem 'kaminari'
 
 # gem 'textacular', :git => "git://github.com/textacular/textacular.git", require:['textacular/rails', 'textacular/tasks']

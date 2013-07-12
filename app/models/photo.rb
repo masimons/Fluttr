@@ -15,12 +15,10 @@
 #
 
 class Photo < ActiveRecord::Base
-  # before_validation :add_album
+  before_destroy :delete_filepicker_photo
 
   attr_accessible :name, :album_id, :image_url, :public, :imageable_id, 
                   :imageable_type, :lat, :lng
-
-  # validates :name, :presence => true
 
   belongs_to :imageable, :polymorphic => true
   
@@ -31,6 +29,11 @@ class Photo < ActiveRecord::Base
 
   has_many :favorites
   has_many :favoriters, :through => :favorites, :source => :user
+
+  def delete_filepicker_photo
+    require 'rest-client'
+    RestClient.delete self.image_url
+  end
 
 
   # def add_album
