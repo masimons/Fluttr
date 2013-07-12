@@ -69,6 +69,7 @@ class User < ActiveRecord::Base
 
   def feed_photos
     followee_ids = self.followees.map { |followee| followee.id }
+    return [] if followee_ids.empty?
     Photo.find_by_sql("SELECT photos.* FROM photos
                     JOIN albums ON imageable_id = albums.id
                     JOIN users ON albums.user_id = users.id
