@@ -48,6 +48,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
+    @group_photos = @group.photos.order('created_at DESC')
     @creator = User.find(@group.creator_id)
   end
 

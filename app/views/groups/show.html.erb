@@ -12,18 +12,112 @@
     </p>
     <button id="upload_button" data-id="<%= @group.id %>" class="btn btn-primary">Add a photo</button>
 
-    <br><br><br><br><br><br><br>
-
-    <div id="group_photos">
-      <% @group.photos.each do |photo| %>
-        <span><img src="<%= photo.image_url %>/convert?w=500&h=500&fit=clip"></span>
-      <% end %>
-    </div>
-
   </div>
 </div>
 
+<div class="row-fluid" style="padding:50px;">
+  <div id="group_photos">
+    <% @group_photos.each do |photo| %>
+      <div style="padding:50px;">
+        <div style="text-align: center;"><img src="<%= photo.image_url %>/convert?w=800&h=800&fit=clip"></div><br>
+
+        <div style="margin-left: 24%;">
+          <a class="favorite" 
+             style="display:<%= 'none' if current_user.favorites.include?(photo) %>"
+             data-id="<%= photo.id %>">
+             Add to favorites
+          </a>
+
+          <a class="unfavorite" 
+             style="display:<%= 'none' if !current_user.favorites.include?(photo) %>"
+             data-id="<%= photo.id %>">
+             Remove from favorites
+          </a>
+        </div>
+        <br>
+
+
+        <div style="margin-left: 24%;" class="comments">
+          <% photo.comments.each do |comment| %>
+            <div class="media">
+              <a class="pull-left" href="<%= user_path(comment.user) %>">
+                <img class="media-object" src="<%= comment.user.profile_url %>/convert?w=50&h=50&fit=clip">
+              </a>
+              <div class="media-body">
+                <h5 class="media-heading"><%= comment.user.username %></h5>
+                <%= comment.body %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <br>
+
+
+        <center>
+          <div data-id-photo="<%= photo.id %>">
+            <textarea class="comment" id="comment_body" placeholder="Write a comment"></textarea>
+          </div>
+        </center>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
 <script type="text/javascript">
+
+  $("a.favorite").on("click", function(event) {
+    var photo_id = $(event.currentTarget).attr('data-id');
+    $.ajax({
+      url: "/favorites",
+      type: "POST",
+      data: { photo_id: photo_id },
+      success: function(data) {
+        $("a.favorite").toggle();
+        $("a.unfavorite").toggle();
+      }
+    })
+  })
+
+  $('a.unfavorite').on("click", function(event) {
+    var photo_id = $(event.currentTarget).attr('data-id');
+    $.ajax({
+      url: "/favorites/destroy_favorite",
+      type: "DELETE",
+      data: { photo_id: photo_id },
+      success: function(data) {
+        $("a.favorite").toggle();
+        $("a.unfavorite").toggle();
+      }
+    })
+  })
+
+  $('#comment_body').on("keypress", function(event) {
+    if (event.which === 13) {
+      var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
+      var body = $(event.currentTarget).val();
+    $.ajax({
+      url: '/photos/' + photo_id + "/comments.json",
+      type: "POST",
+      data: { comment: {photo_id: photo_id, 
+                        user_id: <%= current_user.id %>,
+                        body: body }},
+      success: function(data) {
+        console.log(data.user.profile_url);
+        var profpic = data.user.profile_url + "/convert?w=50&h=50&fit=clip";
+        var body = data.comment.body;
+        var user_show = "/users/" + data.user.id;
+
+        new_comment = "<div class='media'><a class='pull-left' href='" + user_show + "'><img class='media-object' src='" + profpic
+        + "'></a><div class='media-body'><h5 class='media-heading'>" + data.user.username + "</h5>" + body + "</div></div>"
+
+        $('textarea#comment_body').val('');
+        $('.comments').append(new_comment);
+      }
+    });
+    }
+  })
+
   filepicker.setKey('AhjzhTx37SyaNYS8XvjR9z');
 
   var inkblobToUrl = function(InkBlobs) {
@@ -42,9 +136,9 @@
         success: function(data) {
           console.log(data.id);
 
-          var image = "<span><a href='/photos/" + data.id +"'><img src='" + data.image_url + "/convert?w=500&h=500&fit=clip'></a></span>"
-          console.log(image);
-          $('#group_photos').append(image);
+          // var image = "<span><a href='/photos/" + data.id +"'><img src='" + data.image_url + "/convert?w=500&h=500&fit=clip'></a></span>"
+          // console.log(image);
+          // $('#group_photos').append(image);
         }
       });
 
