@@ -5,12 +5,19 @@
     <img id="img" data-id="<%= @group.id %>" src="<%= @group.image_url %>/convert?w=200&h=200&fit=clip">
   </div>
   <div class="span9">
-    <h2><%= @group.name %></h2>
+    <h2 style="display:inline;"><%= @group.name %></h2>
+    <a id="join<%= @group.id %>" class="join" style="display:<%= 'none' if @group.members.include?(current_user) %>" data-id="<%= @group.id %>"><button class="btn btn-primary btn-large pull-right">Join</button></a></li>
+    <a id="leave<%= @group.id %>" class="leave" style="display:<%= 'none' if !@group.members.include?(current_user) %>" data-id="<%= @group.id %>"><button class="btn btn-primary btn-large pull-right">Leave Group</button></a>
 
     <p>
       <%= @group.description %>
     </p>
-    <button id="upload_button" data-id="<%= @group.id %>" class="btn btn-primary">Add a photo</button>
+
+    <button id="upload_button" 
+            data-id="<%= @group.id %>" 
+            class="btn btn-primary <%= 'hidden' unless @group.members.include?(current_user) %>">
+            Add a photo
+    </button>
 
   </div>
 </div>
@@ -142,6 +149,34 @@
         }
       });
 
+    });
+  });
+
+  $('a.join').on("click", function(event) {
+    var group_id = $(event.currentTarget).attr('data-id');
+    $.ajax({
+      url: "/memberships",
+      type: "POST",
+      data: { membership: {group_id: group_id, user_id: <%= current_user.id %> }},
+      success: function(data) {
+        $("a#join" + group_id).toggle();
+        $('a#leave' + group_id).toggle();
+        $('button#upload_button').toggle();
+      }
+    });
+  });
+
+  $('a.leave').on("click", function(event) {
+    var group_id = $(event.currentTarget).attr('data-id');
+    $.ajax({
+      url: "/memberships/destroy_membership",
+      type: "DELETE",
+      data: { group_id: group_id },
+      success: function(data) {
+        $("a#join" + group_id).toggle();
+        $('a#leave' + group_id).toggle();
+        $('button#upload_button').toggle();
+      }
     });
   });
 </script>

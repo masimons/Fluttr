@@ -62,6 +62,10 @@ class User < ActiveRecord::Base
     self.albums.create!(:title => "Other")
   end
 
+  def profile_url=(profile_url)
+    profile_url || 'https://www.filepicker.io/api/file/nSCsCKIJSR2BSWI84YFY'
+  end
+
   def recent_friends_photos
     photos = self.followees.map { |followee| followee.photos }.flatten!
     photos = (photos.sort_by { |photo| photo.created_at }).reverse
