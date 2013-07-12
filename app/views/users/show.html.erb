@@ -4,7 +4,11 @@
   <div id="map-canvas"></div>
 </div>
 
-<img class="profile_picture" src="<%= @user.profile_url %>/convert?w=150&h=150&fit=crop">
+<% if @user.profile_url == '/img/empty-profile.jpg' %>
+  <img class="profile_picture" src="<%= @user.profile_url %>">
+<% else %>
+  <img class="profile_picture" src="<%= @user.profile_url %>/convert?w=150&h=150&fit=crop">
+<% end %>
 
 <h2 style="display: inline;"><%= @user.username %>'s Profile</h2>
 
