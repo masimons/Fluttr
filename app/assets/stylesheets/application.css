@@ -19,6 +19,11 @@
   color: white;
  }
 
+ .demo {
+  width: 400px;
+  height: 100px;
+ }
+
 .edit_photo {
   margin-top: 30px;
 }

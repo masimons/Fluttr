@@ -62,5 +62,7 @@ Flickr::Application.routes.draw do
     end
   end
 
+  # get 'about' => "static_pages#about"
+
   root :to => "static_pages#home"
 end

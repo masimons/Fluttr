@@ -1,8 +1,24 @@
 <center>
   <div id="home_text">
-    <h1 class="large">Smile</h1>
+    <h1 class="large">Welcome to Fluttr</h1>
     <br>
-    <a href="<%= new_user_registration_path %>" class="btn btn-primary btn-large">Sign up for Flickr</a>
+    <button class="btn btn-primary btn-large demo"><h1>Demo account</h1></button>
   </div>
 </center>
 
+
+<form id="submit_form" action="/users/login" method="post" class="new_user" id="new_user">
+  <input type="hidden" name="user[email]" value="masimons66@gmail.com">
+  <input type="hidden" name="user[password]" value="marissas">
+
+  <input type="hidden"
+       name="authenticity_token"
+       value="<%= form_authenticity_token %>">
+</form>
+
+<script type="text/javascript">
+  $('button.demo').on('click', function(e) {
+    e.preventDefault;
+    $('#submit_form').submit(); 
+  });
+</script>
