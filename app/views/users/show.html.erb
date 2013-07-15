@@ -4,14 +4,9 @@
   <div id="map-canvas"></div>
 </div>
 
-<% if @user.profile_url == '/img/empty-profile.jpg' %>
-  <img class="profile_picture" src="<%= @user.profile_url %>">
-<% else %>
-  <img class="profile_picture" src="<%= @user.profile_url %>/convert?w=150&h=150&fit=crop">
-<% end %>
+<img class="profile_picture" src="<%= @user.profile_url %>/convert?w=150&h=150&fit=crop">
 
 <h2 style="display: inline;"><%= @user.username %>'s Profile</h2>
-
 
 <a class="pull-right" id="follow" style="display:<%= 'none' if current_user.followees.include?(@user) || current_user == @user %>" data-id="<%= @user.id %>">
   <button class="btn btn-primary btn-large">Follow</button></a>
@@ -37,10 +32,15 @@
 </div>
 
 <div id="content">
-  <% @recent_photos.each do |photo| %>
-    <div>
-      <a href="<%= photo_path(photo) %>"><img class="worldmap_photos" src="<%=photo.image_url %>/convert?w=300&h=300&fit=crop"></img></a>
-    </div>
+  <% if !@recent_photos.empty? %>
+    <% @recent_photos.each do |photo| %>
+      <div>
+        <a href="<%= photo_path(photo) %>"><img class="worldmap_photos" src="<%=photo.image_url %>/convert?w=300&h=300&fit=crop"></img></a>
+      </div>
+    <% end %>
+  <% else %>
+    <h2>You haven't uploaded any photos!</h2>
+    <h4>Click <%= link_to 'here', new_user_album_path(current_user) %> to create an album.</h4>  
   <% end %>
 </div>
 

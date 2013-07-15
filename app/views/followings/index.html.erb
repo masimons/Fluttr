@@ -1,10 +1,14 @@
-<div>
-  <ul>
-  <% @followees.each do |followee| %>
-    <li style="padding: 10px; display:inline; float:left;">
-      <center><a style="display:block; margin-top: 5px;" href="<%= user_path(followee) %>"><%= followee.username %></a></center>
-      <a href="<%= user_path(followee) %>"><img src="<%= followee.profile_url %>/convert?w=200&h=200&fit=clip"></img></a>
-    </li>
-  <% end %>
-  </ul>
-</div>
+<% if !@followees.empty? %>
+  <div>
+    <ul>
+    <% @followees.each do |followee| %>
+      <li style="padding: 10px; display:inline; float:left;">
+        <center><a style="display:block; margin-top: 5px;" href="<%= user_path(followee) %>"><%= followee.username %></a></center>
+        <a href="<%= user_path(followee) %>"><img src="<%= followee.profile_url %>/convert?w=200&h=200&fit=clip"></img></a>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+<% else %>
+  <h2>You aren't following anyone yet!</h2>
+<% end %>
