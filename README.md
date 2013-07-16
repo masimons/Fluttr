@@ -1,1 +1,1 @@
-This is my Flickr Clone.
+This is a Flickr Clone I built in 2 weeks.
