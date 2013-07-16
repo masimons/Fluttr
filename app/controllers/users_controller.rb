@@ -12,7 +12,8 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update_attributes!(params[:user])
+    @user.update_attributes(:profile_url => params[:user][:profile_url])
+    puts @user.profile_url
     respond_to do |format|
       format.json { render :json => @user }
       format.html { redirect_to user_path(current_user) }

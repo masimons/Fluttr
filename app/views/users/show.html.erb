@@ -165,9 +165,9 @@
       $.ajax({
         type: "PUT",
         url: "/users/" + <%= current_user.id %> + ".json",
-        data: { user: {profile_url: url }},
+        data: { user: {profile_url: url } },
         success: function(data) {
-          console.log(data);
+          console.log(data.profile_url);
           var img = data.profile_url + "/convert?w=150&h=150&fit=crop"
           $('.profile_picture').attr("src", img);
         }
