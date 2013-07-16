@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   end
 
   def profile_url
-    self.profile_url || " https://www.filepicker.io/api/file/nSCsCKIJSR2BSWI84YFY"
+    @profile_url || "https://www.filepicker.io/api/file/nSCsCKIJSR2BSWI84YFY"
   end
 
   def recent_friends_photos
