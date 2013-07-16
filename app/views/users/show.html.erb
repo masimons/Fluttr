@@ -158,15 +158,16 @@
     {location:"S3"}, function(InkBlobs){
 
       var url = inkblobToUrl(InkBlobs);
+      console.log(url);
       // var img = "<img src='" + url + "/convert?w=300&h=300&fit=clip'></img>"
       // $('.profile_picture').html(img);
 
       $.ajax({
         type: "PUT",
-        url: "/users/" + "<%= current_user.id %>" + ".json",
+        url: "/users/" + <%= current_user.id %> + ".json",
         data: { user: {profile_url: url }},
         success: function(data) {
-          console.log(data.profile_url);
+          console.log(data);
           var img = data.profile_url + "/convert?w=150&h=150&fit=crop"
           $('.profile_picture').attr("src", img);
         }

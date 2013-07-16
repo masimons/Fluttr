@@ -62,9 +62,9 @@ class User < ActiveRecord::Base
     self.albums.create!(:title => "Other")
   end
 
-  def profile_url=(link)
-    self.profile_url = link || 'https://www.filepicker.io/api/file/nSCsCKIJSR2BSWI84YFY'
-  end
+  # def profile_url=(link)
+  #   self.profile_url = link || 'https://www.filepicker.io/api/file/nSCsCKIJSR2BSWI84YFY'
+  # end
 
   def recent_friends_photos
     photos = self.followees.map { |followee| followee.photos }.flatten!
