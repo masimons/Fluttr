@@ -1,4 +1,5 @@
 class AlbumsController < ApplicationController
+  before_filter :redirect_logged_out_user
   before_filter :redirect_user
 
   def new

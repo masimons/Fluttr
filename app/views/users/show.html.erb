@@ -153,6 +153,7 @@
 
   }
 
+<% if current_user == @user %>
   $("img.profile_picture").on("click", function(event) {
     filepicker.pickAndStore({multiple: false, mimetype:"image/*"},
     {location:"S3"}, function(InkBlobs){
@@ -175,6 +176,7 @@
 
     });
   });
+<% end %>
 
   $('a#follow').on("click", function(event) {
     console.log($(event.currentTarget).attr('data-id'));
