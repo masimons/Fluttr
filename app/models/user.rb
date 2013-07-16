@@ -26,7 +26,7 @@
 class User < ActiveRecord::Base
   paginates_per 5
 
-  after_create :add_album
+  # after_create :add_album
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable
@@ -58,9 +58,9 @@ class User < ActiveRecord::Base
   has_many :favorites
   has_many :favorite_photos, :through => :favorites, :source => :photo
 
-  def add_album
-    self.albums.create!(:title => "Other")
-  end
+  # def add_album
+  #   self.albums.create!(:title => "Other")
+  # end
 
   # def profile_url
   #   @profile_url || "https://www.filepicker.io/api/file/nSCsCKIJSR2BSWI84YFY"
