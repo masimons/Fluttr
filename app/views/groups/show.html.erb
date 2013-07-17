@@ -47,7 +47,7 @@
         <div style="margin-left: 24%;">
           <% photo.comments.each do |comment| %>
             <div id="comment_body<%= photo.id %>">
-              <div class="media">
+              <div class="media" style="padding:10px;">
                 <a class="pull-left" href="<%= user_path(comment.user) %>">
                   <img class="media-object" src="<%= comment.user.profile_url %>/convert?w=50&h=50&fit=clip">
                 </a>
