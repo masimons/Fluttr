@@ -44,15 +44,17 @@
         <br>
 
 
-        <div style="margin-left: 24%;" class="comments">
+        <div style="margin-left: 24%;">
           <% photo.comments.each do |comment| %>
-            <div class="media">
-              <a class="pull-left" href="<%= user_path(comment.user) %>">
-                <img class="media-object" src="<%= comment.user.profile_url %>/convert?w=50&h=50&fit=clip">
-              </a>
-              <div class="media-body">
-                <h5 class="media-heading"><%= comment.user.username %></h5>
-                <%= comment.body %>
+            <div id="comment_body<%= photo.id %>">
+              <div class="media">
+                <a class="pull-left" href="<%= user_path(comment.user) %>">
+                  <img class="media-object" src="<%= comment.user.profile_url %>/convert?w=50&h=50&fit=clip">
+                </a>
+                <div class="media-body">
+                  <h5 class="media-heading"><%= comment.user.username %></h5>
+                  <%= comment.body %>
+                </div>
               </div>
             </div>
           <% end %>
@@ -62,7 +64,7 @@
 
         <center>
           <div data-id-photo="<%= photo.id %>">
-            <textarea class="comment" id="comment_body" placeholder="Write a comment"></textarea>
+            <textarea class="comment" placeholder="Write a comment"></textarea>
           </div>
         </center>
       </div>
@@ -99,7 +101,7 @@
     })
   })
 
-  $('#comment_body').on("keypress", function(event) {
+  $('textarea.comment').on("keypress", function(event) {
     if (event.which === 13) {
       var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
       var body = $(event.currentTarget).val();
@@ -110,7 +112,6 @@
                         user_id: <%= current_user.id %>,
                         body: body }},
       success: function(data) {
-        console.log(data.user.profile_url);
         var profpic = data.user.profile_url + "/convert?w=50&h=50&fit=clip";
         var body = data.comment.body;
         var user_show = "/users/" + data.user.id;
@@ -118,8 +119,11 @@
         new_comment = "<div class='media'><a class='pull-left' href='" + user_show + "'><img class='media-object' src='" + profpic
         + "'></a><div class='media-body'><h5 class='media-heading'>" + data.user.username + "</h5>" + body + "</div></div>"
 
-        $('textarea#comment_body').val('');
-        $('.comments').append(new_comment);
+        $('textarea.comment').val('');
+        console.log(photo_id)
+        console.log(new_comment)
+        console.log($('#comment_body' + photo_id).html())
+        $('#comment_body' + photo_id).append(new_comment);
       }
     });
     }
