@@ -15,6 +15,6 @@ class Album < ActiveRecord::Base
   validates :title, :user_id, :presence => true
 
   belongs_to :user
-  has_many :photos, :as => :imageable, :dependent => :destroy_all
+  has_many :photos, :as => :imageable, :dependent => :delete_all
 
 end
