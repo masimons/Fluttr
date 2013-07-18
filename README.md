@@ -9,15 +9,16 @@ Tech
 Features and Technologies used in Fluttr include:
 
 * __Authentication__ - Login / Registration / Sessions done through Devise.
-                 
-* __Commenting__  - Comment on photos. 
-              
-* __Polymorphic associations__ - Photos can belong to Albums or Groups. 
-* __Photo Albums__ - Photos are uploaded through FilePicker and stored on Amazon S3.
-               
-* __Following__ - Follow / Unfollow other users.
-* __News Feed__ - News feed of photos posted by users you are following, shown in a feed with infinite scroll.  
+* __Polymorphic associations__ - Photos can belong to Albums or Groups.
+* __WorldMap__ - Photos can be geotagged and placed on a map using Google Maps API.
 * __Search__ - Search for a specific Group, or search by photo tags.
+* __Commenting__  - AJAX requests process comments.
+* __Favorites__ - Add photos to your list of favorites.
+* __Groups__ - Create / Join / post photos to a Group.
+* __Photo Albums__ - Photos are uploaded through FilePicker and stored on Amazon S3. 
+* __Following__ - Follow / Unfollow users.
+* __News Feed__ - News feed of photos posted by users you are following, shown in a feed with infinite scroll.  
+
 
 
 Live URL: http://fluttr.marissasimons.com
