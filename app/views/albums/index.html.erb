@@ -7,7 +7,7 @@
     <% else %>
       <div>
         <a href="<%= user_album_path(current_user, album) %>">
-        <img style="float:left; margin:10px;" src="<%= album.photos.first.image_url %>/convert?w=300&h=300&fit=crop">
+          <img class="block_photos" src="<%= album.photos.first.image_url %>/convert?w=300&h=300&fit=crop">
         </a>
       </div>
     <% end %>

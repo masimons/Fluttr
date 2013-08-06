@@ -21,8 +21,6 @@
             <li><a href="<%= user_photos_path(current_user) %>"></i>Photos</a></li>
             <li class="divider"></li>
             <li><a href="<%= user_albums_path(current_user) %>"></i>Albums</a></li>
-            <!-- <li class="divider"></li> -->
-            <!-- <li><a href="<%#= new_photo_path %>"></i>Upload</a></li> -->
           </ul>
         </div>
       <% end %>
@@ -39,6 +37,8 @@
       </div>
     </div>
   </div>
+
+  <!-- TODO: EXTRACT THIS SCRIPT TAG -->
 
 <script>
   $('#search_tags').on('keypress', function(event) {

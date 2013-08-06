@@ -22,11 +22,11 @@
       <br>
 
       <div id="public_label<%= photo.id %>"></div>
-      <label style="display: inline;" for="public">Public</label>
+      <label class="show_inline" for="public">Public</label>
       <input type="radio" name="photo[public]" id="public" 
              value="true" class="radio_button"
              <%= "checked" if photo.public == true %> >
-      <label style="display: inline;" for="private">Private</label> 
+      <label class="show_inline" for="private">Private</label> 
       <input type="radio" name="photo[public]" id="private" 
              value="false" class="radio_button"
              <%= "checked" if photo.public == false %> >
@@ -43,7 +43,6 @@
 
 <script type="text/javascript">
   $('.album_dropdown').on("click", function(event) {
-    console.log($(event.currentTarget).parent().attr('data-id-photo'));
     var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
     var album_id_var = $(event.currentTarget).val();
     $.ajax({
@@ -93,7 +92,6 @@
         type: 'POST',
         data: { photo_id: photo_id, name: name},
         success: function(data) {
-          console.log(data);
           $(event.currentTarget).val('');
           $('div#tag_label' + photo_id).append('<p>' + data.name + '</p>');
         }

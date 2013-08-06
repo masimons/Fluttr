@@ -105,7 +105,6 @@
 
 
   $('.album_dropdown').on("click", function(event) {
-    console.log($(event.currentTarget).parent().attr('data-id-photo'));
     var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
     var album_id_var = $(event.currentTarget).val();
     $.ajax({
@@ -113,14 +112,12 @@
       type: 'PUT',
       data: {photo: {imageable_id: album_id_var, imageable_type: "Album"}},
       success: function(data) {
-        console.log(data);
         $('#album_label' + data.id).text("Saved").css("color", "green");
       }
     });
   });
 
   $('.name_field').on("keypress", function(event) {
-    // console.log($(event.currentTarget).val());
     if (event.which === 13) {
       var photo_id = $(event.currentTarget).parent().attr('data-id-photo');
       var value = $(event.currentTarget).val();
@@ -157,7 +154,6 @@
         type: 'POST',
         data: { photo_id: photo_id, name: name },
         success: function(data) {
-          console.log(data);
           $(event.currentTarget).val('');
           $('div#tag_label' + photo_id).append('<p>' + data.name + '</p>');
         }
@@ -183,16 +179,13 @@
   $('#universal_tag').on("keypress", function(event) {
     if (event.which === 13) {
       var name = $(event.currentTarget).val();
-      // console.log($(event.currentTarget).attr('data-id'));
       $.ajax({
         url: '/tags',
         type: 'POST',
         data: { name: name, album_id: <%= @album.id %> },
         success: function(data) {
-          console.log(data);
           $('#universal_tag').val('');
-          $('#universal_tag_label').append("<p>" + data.name + "</p>")
-          // $('#universal_tag_label').append('<p>' + data.name + '</p>');
+          $('#universal_tag_label').append("<p>" + data.name + "</p>");
         }
       })
     }

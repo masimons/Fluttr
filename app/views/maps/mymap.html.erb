@@ -11,7 +11,7 @@
     <% @albums.each do |album| %>
       <% next if album.photos.empty? %>
       <div class="album" data-id="<%= album.id %>" >
-        <div style="display: inline;">
+        <div class="show_inline">
           <%= album.title %>
         </div>
         <div>
@@ -47,9 +47,7 @@
   </form>
 </div>
 
-
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-
 
 <style type="text/css">
   #yield { height: 500px; margin: 0; padding: 0 }
@@ -74,11 +72,8 @@
 
     google.maps.event.addListener(map, "click", function(event){
       var coords = [Math.round(event.latLng.jb), Math.round(event.latLng.kb)]
-      console.log(coords);
       $('#myModal').modal();
-      //hidden field with latLng
       $('#hidden_coords').attr('value', coords);
-      // placeMarker(event.latLng, map);
     });
   }
 
@@ -96,7 +91,6 @@
   })
 
   $('.album').on("click", function(event) {
-    console.log(event.currentTarget);
     var album_num = $(event.currentTarget).attr('data-id');
     $('.album').hide();
     $('.album' + album_num).show();

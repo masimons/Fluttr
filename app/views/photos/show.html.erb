@@ -83,7 +83,6 @@
                         user_id: <%= current_user.id %>,
                         body: body }},
       success: function(data) {
-        console.log(data.user.profile_url);
         var profpic = data.user.profile_url + "/convert?w=50&h=50&fit=clip";
         var body = data.comment.body;
         var user_show = "/users/" + data.user.id;

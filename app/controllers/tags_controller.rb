@@ -1,8 +1,5 @@
 class TagsController < ApplicationController
 
-  def index 
-  end
-
   def create
     name = params[:name].capitalize
     photo_id = params[:photo_id]

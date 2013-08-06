@@ -91,10 +91,22 @@ h1.large {
   margin: 10px;
 }
 
-.photo_feed {
-  /*margin-left: 10%*/
+.block_photos {
+  float: left;
+  margin: 10px;
 }
 
 #content {
   height: 100%;
+}
+
+.followee_list {
+  padding: 10px;
+  display:inline;
+  float:left;
+}
+
+.followee_username {
+  display:block; 
+  margin-top: 5px;
 }

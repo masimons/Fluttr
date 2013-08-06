@@ -31,7 +31,6 @@ class PhotosController < ApplicationController
     else
       render "albums/edit", :layout => false
     end
-
   end
 
   def show

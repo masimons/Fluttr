@@ -44,11 +44,8 @@
       type: "POST",
       data: { membership: {group_id: group_id, user_id: <%= current_user.id %> }},
       success: function(data) {
-        console.log(event.currentTarget);
         $("a#join" + group_id).toggle();
-        console.log($("a#join" + group_id));
         $('a#leave' + group_id).toggle();
-        console.log($("a#leave" + group_id));
       }
     });
   });
@@ -60,7 +57,6 @@
       type: "DELETE",
       data: { group_id: group_id },
       success: function(data) {
-        console.log($(event.currentTarget));;
         $("a#join" + group_id).toggle();
         $('a#leave' + group_id).toggle();
       }
@@ -75,7 +71,6 @@
         type: 'GET',
         data: { search_word: search_word },
         success: function(data) {
-          console.log(data);
           $('#yield').html(data);
         }
       })

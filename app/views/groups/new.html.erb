@@ -35,7 +35,6 @@
     {location:"S3"}, function(InkBlobs){
 
       var url = inkblobToUrl(InkBlobs);
-      console.log(url);
       var img = "<img src='" + url + "/convert?w=150&h=150&fit=clip'></img>"
       $('#avatar_div').html(img);
       $('#hidden_url').attr('value', url);

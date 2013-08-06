@@ -6,7 +6,7 @@
 
 <img class="profile_picture" src="<%= @user.profile_url %>/convert?w=150&h=150&fit=crop">
 
-<h2 style="display: inline;"><%= @user.username %>'s Profile</h2>
+<h2 class="show_inline"><%= @user.username %>'s Profile</h2>
 
 <a class="pull-right" id="follow" style="display:<%= 'none' if current_user.followees.include?(@user) || current_user == @user %>" data-id="<%= @user.id %>">
   <button class="btn btn-primary btn-large">Follow</button></a>
@@ -15,13 +15,7 @@
 
 <br><br>
 
-<div class="tabbable tabs-below"> <!-- Only required for left/right tabs -->
-<!--   <div class="tab-content">
-    <div class="tab-pane active" id="tab1">
-    </div>
-    <div class="tab-pane" id="tab2">
-    </div>
-  </div> -->
+<div class="tabbable tabs-below"> 
   <ul class="nav nav-tabs">
     <li id="recent_photos" class="active"><a href="<%= user_path(@user) %>">Recent Photos</a></li>
     <li id="groups"><a id="groups" href="#">Groups</a></li>
@@ -35,7 +29,7 @@
   <% if !@recent_photos.empty? %>
     <% @recent_photos.each do |photo| %>
       <div>
-        <a href="<%= photo_path(photo) %>"><img class="worldmap_photos" src="<%=photo.image_url %>/convert?w=300&h=300&fit=crop"></img></a>
+        <a href="<%= photo_path(photo) %>"><img class="block_photos" src="<%=photo.image_url %>/convert?w=300&h=300&fit=crop"></img></a>
       </div>
     <% end %>
   <% else %>
@@ -56,19 +50,13 @@
     <% @albums.each do |album| %>
       <% next if album.photos.empty? %>
       <div class="album" data-id="<%= album.id %>" >
-        <div style="display: inline;">
+        <div class="show_inline">
           <%= album.title %>
         </div>
         <div>
-          <!-- <img src='https://www.filepicker.io/api/file/LE6Na8FtSRCyK4HUyiLW/convert?w=50&h=50&fit=clip'> -->
           <img src='<%= album.photos.first.image_url %>/convert?w=100&h=100&fit=clip'></img>
         </div>
       </div>
-
-
-
-
-
 
       <!-- Create a hidden div for each album and fill it with its photos and checkboxes -->
       
@@ -106,12 +94,10 @@
 
   $('#favorites').on('click', function(event) {
     event.preventDefault();
-    console.log(event);
     $.ajax({
       url: '/users/' + <%= @user.id %> + '/favorites',
       type: 'GET',
       success: function(data) {
-        console.log(data);
         $('#content').html(data);
         $(".fancybox").fancybox();
       }
@@ -120,7 +106,6 @@
 
   $('#groups').on('click', function(event) {
     event.preventDefault();
-    console.log(event.currentTarget);
     $.ajax({
       url: '/users/' + <%= @user.id %> + '/groups',
       type: 'GET',
@@ -134,7 +119,6 @@
 
   $('#following').on('click', function(event) {
     event.preventDefault();
-    console.log(event.currentTarget);
     $.ajax({
       url: '/users/' + <%= @user.id %> + '/followings',
       type: 'GET',
@@ -159,16 +143,12 @@
     {location:"S3"}, function(InkBlobs){
 
       var url = inkblobToUrl(InkBlobs);
-      console.log(url);
-      // var img = "<img src='" + url + "/convert?w=300&h=300&fit=clip'></img>"
-      // $('.profile_picture').html(img);
 
       $.ajax({
         type: "PUT",
         url: "/users/" + <%= current_user.id %> + ".json",
         data: { user: {profile_url: url } },
         success: function(data) {
-          console.log(data.profile_url);
           var img = data.profile_url + "/convert?w=150&h=150&fit=crop"
           $('.profile_picture').attr("src", img);
         }
@@ -179,16 +159,14 @@
 <% end %>
 
   $('a#follow').on("click", function(event) {
-    console.log($(event.currentTarget).attr('data-id'));
     var followee_id = $(event.currentTarget).attr('data-id');
     $.ajax({
       url: "/followings",
       type: "POST",
       data: { followee_id: followee_id },
       success: function(data) {
-        console.log(data);
         $("a#follow").toggle();
-        $('a#unfollow').toggle();
+        $("a#unfollow").toggle();
       }
     });
   });
@@ -200,9 +178,8 @@
       type: "DELETE",
       data: { followee_id: followee_id },
       success: function(data) {
-        console.log($(event.currentTarget));;
         $("a#follow").toggle();
-        $('a#unfollow').toggle();
+        $("a#unfollow").toggle();
       }
     });
   });
@@ -231,16 +208,11 @@
       mapOptions);
 
     <% if @user == current_user %>
-    google.maps.event.addListener(map, "click", function(event){
-      // var coords = [Math.round(event.latLng.jb), Math.round(event.latLng.kb)]
-      console.log((event.latLng.jb));
-      // $('#hidden_lat').attr('value', Math.round(event.latLng.jb));
-      $('#hidden_lat').val(Math.round(event.latLng.jb * 1000)/1000);
-      // $('#hidden_lng').attr('value', Math.round(event.latLng.kb));
-      $('#hidden_lng').val(Math.round(event.latLng.kb * 1000)/1000);
-      $('#myModal').modal();
-      //hidden field with latLng
-    });
+      google.maps.event.addListener(map, "click", function(event){;
+        $('#hidden_lat').val(Math.round(event.latLng.jb * 1000)/1000);
+        $('#hidden_lng').val(Math.round(event.latLng.kb * 1000)/1000);
+        $('#myModal').modal();
+      });
     <% end %>
 
     $.ajax({
@@ -293,7 +265,6 @@
     })
 
     $('.album').on("click", function(event) {
-      console.log(event.currentTarget);
       var album_num = $(event.currentTarget).attr('data-id');
       $('.album').hide();
       $('.album' + album_num).show();

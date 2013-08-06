@@ -1,12 +1,13 @@
 <% if !@favorites.empty? %>
   <% @favorites.each do |photo| %>
     <a class="fancybox" rel="group" href="<%= photo.imageable_type == 'Album' ? photo_path(photo) : '#' %>">
-      <img class="worldmap_photos" src="<%= photo.image_url %>/convert?w=300&h=300&fit=crop">
+      <img class="block_photos" src="<%= photo.image_url %>/convert?w=300&h=300&fit=crop">
       </img>
     </a>
   <% end %>
-  <% else %>
-    <h2>You don't have any favorite photos yet!</h2>
-    <h4><%= link_to 'Explore', all_photos_path %> or check out the <%= link_to 'Worldmap', world_map_path %> to see what people are posting.</h4>
-  <% end %>
+<% else %>
+  <h2>You don't have any favorite photos yet!</h2>
+  <h4><%= link_to 'Explore', all_photos_path %> or check out the <%= link_to 'Worldmap', world_map_path %> to see what people are posting.</h4>
+<% end %>
+
 

@@ -12,9 +12,7 @@ class AlbumsController < ApplicationController
 
   def create
     @album = current_user.albums.create(params[:album])
-    respond_to do |format|
-      format.json { render :json => @album }
-    end
+    render :json => @album
   end
 
   def show
@@ -29,9 +27,7 @@ class AlbumsController < ApplicationController
   def update
     @album = Album.find(params[:id])
     @album.update_attributes(params[:album])
-    respond_to do |format|
-      format.json { render :json => @album }
-    end
+    render :json => @album
   end
 
   def album_photos
@@ -52,6 +48,5 @@ class AlbumsController < ApplicationController
       redirect_to user_path(user)
     end
   end
-
 
 end

@@ -5,7 +5,7 @@
     <img id="img" data-id="<%= @group.id %>" src="<%= @group.image_url %>/convert?w=200&h=200&fit=clip">
   </div>
   <div class="span9">
-    <h2 style="display:inline;"><%= @group.name %></h2>
+    <h2 class="show_inline"><%= @group.name %></h2>
     <a id="join<%= @group.id %>" class="join" style="display:<%= 'none' if @group.members.include?(current_user) %>" data-id="<%= @group.id %>"><button class="btn btn-primary btn-large pull-right">Join</button></a></li>
     <a id="leave<%= @group.id %>" class="leave" style="display:<%= 'none' if !@group.members.include?(current_user) %>" data-id="<%= @group.id %>"><button class="btn btn-primary btn-large pull-right">Leave Group</button></a>
 
@@ -120,9 +120,6 @@
         + "'></a><div class='media-body'><h5 class='media-heading'>" + data.user.username + "</h5>" + body + "</div></div>"
 
         $('textarea.comment').val('');
-        console.log(photo_id)
-        console.log(new_comment)
-        console.log($('#comment_body' + photo_id).html())
         $('#comment_body' + photo_id).append(new_comment);
       }
     });
@@ -145,10 +142,8 @@
         url: "/groups/" + <%= @group.id %> + ".json",
         data: { photo: {imageable_id: <%= @group.id %>, imageable_type: "Group", image_url: url}},
         success: function(data) {
-          console.log(data.id);
 
           // var image = "<span><a href='/photos/" + data.id +"'><img src='" + data.image_url + "/convert?w=500&h=500&fit=clip'></a></span>"
-          // console.log(image);
           // $('#group_photos').append(image);
         }
       });

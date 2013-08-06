@@ -5,7 +5,7 @@
 <div>
   <% @album.photos.each do |photo| %>
     <div>
-      <img style="float:left; margin:10px;" src="<%= photo.image_url %>/convert?w=300&h=300&fit=crop">
+      <img class="block_photos" src="<%= photo.image_url %>/convert?w=300&h=300&fit=crop">
     </div>
   <% end %>
 </div>

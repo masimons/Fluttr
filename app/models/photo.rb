@@ -35,17 +35,9 @@ class Photo < ActiveRecord::Base
     RestClient.delete self.image_url
   end
 
-
-  # def add_album
-  #   album = current_user.albums.where(:title => "Other")
-  #   if album_id.nil? && album.empty?
-  #     new_album = Album.create!(:title => "Other",
-  #                                :user_id => current_user.id)
-  #     self.album_id = new_album.id
-  #   else
-  #     self.album_id = album[0].id
-  #   end
-  # end
+  def convert_photo(url, width, height, fit)
+    url + "/convert?w=#{width}&h=#{height}&fit=#{fit}"
+  end
 
 end
 

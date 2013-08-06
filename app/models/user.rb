@@ -26,8 +26,6 @@
 class User < ActiveRecord::Base
   paginates_per 5
 
-  # after_create :add_album
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
@@ -58,14 +56,6 @@ class User < ActiveRecord::Base
   has_many :favorites
   has_many :favorite_photos, :through => :favorites, :source => :photo
 
-  # def add_album
-  #   self.albums.create!(:title => "Other")
-  # end
-
-  # def profile_url
-  #   @profile_url || "https://www.filepicker.io/api/file/nSCsCKIJSR2BSWI84YFY"
-  # end
-
   def recent_friends_photos
     photos = self.followees.map { |followee| followee.photos }.flatten!
     photos = (photos.sort_by { |photo| photo.created_at }).reverse
@@ -85,6 +75,10 @@ class User < ActiveRecord::Base
 
   # def to_param
   #   "#{self.username}"
+  # end
+
+  # def profile_url
+  #   @profile_url || "https://www.filepicker.io/api/file/nSCsCKIJSR2BSWI84YFY"
   # end
 
 end
