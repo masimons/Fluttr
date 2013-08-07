@@ -28,15 +28,12 @@
   var page = 1;
   $(window).scroll(function (event) { 
    if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
-      console.log(event)
       page += 1;
-      console.log(page);
       $.ajax({
         url: '/users/' + <%= current_user.id %> + '/feed',
         type: 'GET',
         data: { page: page },
         success: function(data) {
-          console.log($(data)[0].innerHTML);
           $('.photo_feed').append($(data)[0].innerHTML);
         }
       })

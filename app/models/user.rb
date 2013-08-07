@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
                     WHERE users.id IN (#{followee_ids.join(',')})
                     AND imageable_type = 'Album'
                     ORDER BY photos.created_at DESC;
-                  ")
+                    ")
   end
 
   # def to_param

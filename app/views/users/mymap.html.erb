@@ -77,14 +77,9 @@
       mapOptions);
 
     google.maps.event.addListener(map, "click", function(event){
-      // var coords = [Math.round(event.latLng.jb), Math.round(event.latLng.kb)]
-      console.log((event.latLng.jb));
-      // $('#hidden_lat').attr('value', Math.round(event.latLng.jb));
       $('#hidden_lat').val(Math.round(event.latLng.jb * 1000)/1000);
-      // $('#hidden_lng').attr('value', Math.round(event.latLng.kb));
       $('#hidden_lng').val(Math.round(event.latLng.kb * 1000)/1000);
       $('#myModal').modal();
-      //hidden field with latLng
     });
 
     $.ajax({
@@ -137,7 +132,6 @@
   })
 
   $('.album').on("click", function(event) {
-    console.log(event.currentTarget);
     var album_num = $(event.currentTarget).attr('data-id');
     $('.album').hide();
     $('.album' + album_num).show();
@@ -146,3 +140,6 @@
 
   google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+
+
+
